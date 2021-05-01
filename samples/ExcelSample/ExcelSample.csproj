@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated</CompilerGeneratedFilesOutputPath>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    </PropertyGroup>
+
+    <Target Name="ExcludeGenerated" BeforeTargets="AssignTargetPaths">
+        <ItemGroup>
+            <Generated Include="generated/**/*.g.cs" />
+            <Compile Remove="@(Generated)" />
+        </ItemGroup>
+        <Delete Files="@(Generated)" />
+    </Target>
+    
+    <ItemGroup>
+      <PackageReference Include="ClosedXML" Version="0.95.4" />
+      <PackageReference Include="Maestria.Extensions" Version="2.0.8" />
+      <PackageReference Include="Maestria.FluentCast" Version="1.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    </ItemGroup>
+
+</Project>

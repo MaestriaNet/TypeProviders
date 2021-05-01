@@ -1,0 +1,29 @@
+version: '2.0.8.{build}'
+image: Visual Studio 2019
+configuration: Release
+dotnet_csproj:
+  patch: true
+  file: 'src\Extensions.csproj'
+  version: '2.0.8'
+  package_version: '2.0.8'
+  assembly_version: '2.0.8'
+  file_version: '2.0.8'
+  informational_version: '2.0.8'
+before_build:
+  - ps: dotnet --version
+build_script:
+  - ps: dotnet build
+test_script:
+  - ps: dotnet test --test-adapter-path:. --logger:Appveyor
+artifacts:
+  - path: src\bin\Release\*.nupkg
+    name: Nuget Package
+deploy:
+  - provider: Environment
+    name: Maestria MyGet
+    on:
+      branch: master
+  - provider: Environment
+    name: Maestria NuGet
+    on:
+      APPVEYOR_REPO_TAG: true
