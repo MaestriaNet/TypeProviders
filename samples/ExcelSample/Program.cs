@@ -6,7 +6,7 @@ using Maestria.TypeProviders.Attributes;
 
 namespace ExcelSample
 {
-    [ExcelProvider("")]
+    [ExcelProvider(@"..\..\resources\Excel.xlsx")]
     public partial class MyExcelData
     {
     }

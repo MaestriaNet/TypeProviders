@@ -15,7 +15,10 @@ namespace Maestria.TypeProviders.Generators
     {
         private StringBuilder _log = new StringBuilder();
 
-        private void Log(string value) => _log.AppendLine(value);
+        private void Log(string value)
+        {
+            // _log.AppendLine(value);
+        }
 
         public void Initialize(GeneratorInitializationContext context)
         {
@@ -41,9 +44,12 @@ namespace Maestria.TypeProviders.Generators
                 context.AddSource($"{name}.ExcelTypeProvider.g.cs",
                     SourceText.From(CreateExcelProvider(classSymbol), Encoding.UTF8));
             }
-            
-            var source = SourceText.From($"/*\n{_log}*/", Encoding.UTF8);
-            context.AddSource("Debug.cs", source);
+
+            if (_log.Length > 0)
+            {
+                var source = SourceText.From($"/*\n{_log}*/", Encoding.UTF8);
+                context.AddSource("Debug.cs", source);
+            }
         }
 
         private string CreateExcelProvider(INamedTypeSymbol classSymbol)
@@ -67,7 +73,6 @@ namespace {namespaceName}
 ");
              foreach (var column in columns)
              {
-                 Log($"  {column.Name}:{column.DataType}");
                  source.Append($"        {column.GetSourceCode()}\r\n");
              }
 
@@ -97,7 +102,7 @@ namespace {namespaceName}
 ");
             foreach (var column in columns)
             {
-                source.Append($"                var {column.Name.ToCamelCase()}Value = row.Cell(sheet.ColumnByName(\"{column.Name}\")).Value;\r\n");
+                source.Append($"                var {column.PropertyName.ToCamelCase()}Value = row.Cell(sheet.ColumnByName(\"{column.SourceName}\")).Value;\r\n");
             }
             
             source.Append(@$"                result.Add(new {classSymbol.Name}
@@ -105,7 +110,7 @@ namespace {namespaceName}
 ");
             foreach (var column in columns)
             {
-                source.Append($"                    {column.Name} = {column.GetCastSourceCode(column.Name.ToCamelCase() + "Value")},\r\n");
+                source.Append($"                    {column.PropertyName} = {column.GetCastSourceCode(column.PropertyName.ToCamelCase() + "Value")},\r\n");
             }
             source.Append("                });\r\n");
 
@@ -145,7 +150,8 @@ namespace {namespaceName}
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
                 yield return new Models.Field
                 {
-                    Name = sheet.Row(1).Cell(i).Value.ToString(),
+                    SourceName = sheet.Row(1).Cell(i).Value.ToString(),
+                    PropertyName = sheet.Row(1).Cell(i).Value.ToString().Replace(" ", ""),
                     DataType = GetFieldDataType(sheet.Row(2).Cell(i).DataType)
                 };
         }

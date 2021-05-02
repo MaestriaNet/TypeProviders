@@ -4,10 +4,11 @@ namespace Maestria.TypeProviders.Generators.Models
 {
     public class Field
     {
-        public string Name { get; set; }
+        public string SourceName { get; set; }
+        public string PropertyName { get; set; }
         public string DataType { get; set; }
 
-        public string GetSourceCode() => $"public {DataType} {Name} {{ get; set; }}";
+        public string GetSourceCode() => $"public {DataType} {PropertyName} {{ get; set; }}";
 
         public string GetCastSourceCode(string variableName) => DataType switch
         {
