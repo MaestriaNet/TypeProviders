@@ -55,11 +55,14 @@ namespace Maestria.TypeProviders.Generators
 $@"using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
+using ClosedXML.Excel;
+using Maestria.FluentCast;
 
 namespace {namespaceName}
 {{
-    public partial class {classSymbol.Name} 
+    public partial class {classSymbol.Name}
     {{
 ");
              foreach (var column in columns)
@@ -67,10 +70,11 @@ namespace {namespaceName}
                  Log($"  {column.Name}:{column.DataType}");
                  source.Append($"        {column.GetSourceCode()}\r\n");
              }
+
              source.Append(@$"
     }}
 
-    public static partial class {classSymbol.Name}Factory 
+    public static partial class {classSymbol.Name}Factory
     {{
         public static IEnumerable<{classSymbol.Name}> Load(Stream input)
         {{
@@ -79,7 +83,26 @@ namespace {namespaceName}
 
         public static IEnumerable<{classSymbol.Name}> Load(string filePath)
         {{
-             throw new NotImplementedException();
+            using var workbook = new XLWorkbook(filePath);
+            var sheet = workbook.Worksheet(1);
+            foreach (var row in sheet.Rows(2, sheet.Rows().Count()))
+            {{
+");
+            foreach (var column in columns)
+            {
+                source.Append($"                var {column.Name.ToCamelCase()}Value = row.Cell(sheet.ColumnByName(\"{column.Name}\")).Value;\r\n");
+            }
+            
+            source.Append(@$"                yield return new {classSymbol.Name}
+                {{
+");
+            foreach (var column in columns)
+            {
+                source.Append($"                    {column.Name} = {column.GetCastSourceCode(column.Name.ToCamelCase() + "Value")},\r\n");
+            }
+            source.Append("                };\r\n");
+
+                source.Append(@$"            }}
         }}
     }}
 }}");

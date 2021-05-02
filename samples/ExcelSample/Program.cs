@@ -17,10 +17,22 @@ namespace ExcelSample
         public static void Main(string[] args)
         {
             Console.WriteLine("Excel Sample");
-            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx"; 
-            var culture = CultureInfo.GetCultureInfo("pt-BR");
+            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
+
+            var data = MyExcelDataFactory.Load(filePath);
+            foreach (var item in data)
+            {
+                Console.WriteLine($"{item.Id}\t{item.Name}");
+            }
+
+            //var teste = new GeneratedClass.SeattleCompanies();
+        }
+
+        public static void LoadWithClosedXml()
+        {
+            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
-            var sheet = workbook.Worksheet("Plan1");
+            var sheet = workbook.Worksheet(1);
 
             //Console.WriteLine("Id DataType: " + sheet.Column(1).Cell(2).DataType);
             //Console.WriteLine("Name DataType: " + sheet.Column(2).Cell(2).DataType);
@@ -35,8 +47,6 @@ namespace ExcelSample
                 var name = row.Cell(sheet.ColumnByName("Name")).Value.ToString();
                 Console.WriteLine($"{id} | {name}");
             }
-
-            //var teste = new GeneratedClass.SeattleCompanies();
         }
     }
 }

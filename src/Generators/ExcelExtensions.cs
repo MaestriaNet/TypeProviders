@@ -3,7 +3,7 @@ using ClosedXML.Excel;
 
 namespace Maestria.TypeProviders.Generators
 {
-    internal static class ExcelExtensions
+    public static class ExcelExtensions
     {
         public static int ColumnUsedCount(this IXLWorksheet sheet)
         {
