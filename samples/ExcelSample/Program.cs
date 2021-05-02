@@ -2,7 +2,7 @@
 using System.Linq;
 using ClosedXML.Excel;
 using Maestria.FluentCast;
-using Maestria.TypeProviders.Attributes;
+using Maestria.TypeProviders.Core;
 
 namespace ExcelSample
 {

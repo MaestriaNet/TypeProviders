@@ -4,9 +4,9 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <Authors>Fábio Monteiro Naspolini</Authors>
         <Company>Fábio Monteiro Naspolini</Company>
-        <PackageId>Maestria.TypeProviders.Attributes</PackageId>
-        <Product>Maestria.TypeProviders.Attributes</Product>
-        <RootNamespace>Maestria.TypeProviders.Attributes</RootNamespace>
+        <PackageId>Maestria.TypeProviders.Core</PackageId>
+        <Product>Maestria.TypeProviders.Core</Product>
+        <RootNamespace>Maestria.TypeProviders.Core</RootNamespace>
         <Version>0.0.1</Version>
     </PropertyGroup>
 

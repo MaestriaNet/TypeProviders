@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Maestria.TypeProviders.Attributes
+namespace Maestria.TypeProviders.Core
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ExcelProviderAttribute : Attribute
