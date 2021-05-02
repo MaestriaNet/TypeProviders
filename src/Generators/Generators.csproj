@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Authors>Fábio Monteiro Naspolini</Authors>
+        <Company>Fábio Monteiro Naspolini</Company>
+        <PackageId>Maestria.TypeProviders.Generators</PackageId>
+        <Product>Maestria.TypeProviders.Generators</Product>
+        <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
+        <LangVersion>9.0</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+<!--        <IncludeBuildOutput>false</IncludeBuildOutput>-->
+        <Version>0.0.1</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" Version="0.95.4" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Maestria.FluentCast" Version="1.0.4" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.Drawing.Common" Version="4.5.0" GeneratePathProperty="true" />
+        <PackageReference Include="System.IO.Packaging" Version="4.0.0" GeneratePathProperty="true" />
+        <PackageReference Include="System.IO.Packaging" Version="4.0.0" GeneratePathProperty="true" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Attributes\Attributes.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+    </PropertyGroup>
+    
+    <Target Name="GetDependencyTargetPaths">
+        <ItemGroup>
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGMaestria_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
+        </ItemGroup>
+    </Target>
+
+</Project>

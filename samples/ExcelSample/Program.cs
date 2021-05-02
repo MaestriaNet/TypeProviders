@@ -2,11 +2,16 @@
 using System.Globalization;
 using System.Linq;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Maestria.FluentCast;
+using Maestria.TypeProviders.Attributes;
 
 namespace ExcelSample
 {
+    [ExcelProvider]
+    public partial class MyExcelData
+    {
+    }
+    
     static class Program
     {
         public static void Main(string[] args)

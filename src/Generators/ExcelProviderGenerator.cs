@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
+using Maestria.TypeProviders.Attributes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Maestria.TypeProviders
+namespace Maestria.TypeProviders.Generators
 {
     [Generator]
     public class ExcelProviderGenerator : ISourceGenerator
     {
+        private StringBuilder _log = new StringBuilder();
+
+        private void Log(string value) => _log.AppendLine(value);
+
         public void Initialize(GeneratorInitializationContext context)
         {
             context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
@@ -19,54 +24,66 @@ namespace Maestria.TypeProviders
 
         public void Execute(GeneratorExecutionContext context)
         {
-            var sourceText = SourceText.From(@"
-        namespace GeneratedClass
-        {
-            public class SeattleCompanies
-            {
-                public string ForTheCloud => ""Microsoft"";
-                public string ForTheTwoDayShipping => ""Amazon"";
-                public string ForTheExpenses => ""Concur"";
-            }
-        }", Encoding.UTF8);
-            context.AddSource("SeattleCompanies.cs", sourceText);
-            
+            Log($"Execute: {DateTime.Now}");
+                
             if (context.SyntaxReceiver is not SyntaxReceiver receiver)
                 return;
-            
-            
             
             var classSymbols = GetClassSymbols(context, receiver);
             var classNames = new Dictionary<string, int>();
             
             foreach (var classSymbol in classSymbols)
             {
+                Log($"Class Symbol: {classSymbol.Name}");
                 classNames.TryGetValue(classSymbol.Name, out var i);
                 var name = i == 0 ? classSymbol.Name : $"{classSymbol.Name}{i + 1}";
                 classNames[classSymbol.Name] = i + 1;
                 context.AddSource($"{name}.ExcelTypeProvider.g.cs",
                     SourceText.From(CreateExcelProvider(classSymbol), Encoding.UTF8));
             }
+            
+            var source = SourceText.From($"/*\n{_log}*/", Encoding.UTF8);
+            context.AddSource("Debug.cs", source);
         }
 
-        private static string CreateExcelProvider(INamedTypeSymbol classSymbol)
+        private string CreateExcelProvider(INamedTypeSymbol classSymbol)
         {
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-            //var memberList = GetMembers(classSymbol, false);
             var columns = GetExcelColumns();
-            
-            var source = new StringBuilder($@"namespace {namespaceName}
+             
+             var source = new StringBuilder(
+$@"using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+
+namespace {namespaceName}
 {{
     public partial class {classSymbol.Name} 
-    {{");
-            foreach (var column in columns)
-            {
-                source.Append($@"/* {column.Name}: {column.DataType} */");
-            }
-            source.Append(@"
+    {{
+");
+             foreach (var column in columns)
+             {
+                 Log($"  {column.Name}:{column.DataType}");
+                 source.Append($"        {column.GetSourceCode()}\r\n");
+             }
+             source.Append(@$"
+    }}
+
+    public static partial class {classSymbol.Name}Factory 
+    {{
+        public static IEnumerable<{classSymbol.Name}> Load(Stream input)
+        {{
+             throw new NotImplementedException();
+        }}
+
+        public static IEnumerable<{classSymbol.Name}> Load(string filePath)
+        {{
+             throw new NotImplementedException();
+        }}
     }}
 }}");
-            return source.ToString();
+             return source.ToString();
         }
 
         private static IEnumerable<INamedTypeSymbol> GetClassSymbols(GeneratorExecutionContext context, SyntaxReceiver receiver)
@@ -89,16 +106,27 @@ namespace Maestria.TypeProviders
             .GetAttributes()
             .Any(x => x.AttributeClass?.Name == name);
 
-        private static IEnumerable<(string Name, XLDataType DataType)> GetExcelColumns()
+        private static IEnumerable<Models.Field> GetExcelColumns()
         {
-            return new List<(string Name, XLDataType DataType)>();
-            /*const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
+            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet("Plan1");
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
-                yield return (
-                    Name: sheet.Row(1).Cell(i).Value.ToString(), 
-                    DataType: sheet.Row(2).Cell(i).DataType);*/
+                yield return new Models.Field
+                {
+                    Name = sheet.Row(1).Cell(i).Value.ToString(),
+                    DataType = GetFieldDataType(sheet.Row(2).Cell(i).DataType)
+                };
         }
+
+        private static string GetFieldDataType(XLDataType dataType) => dataType switch
+        {
+            XLDataType.Boolean => "bool",
+            XLDataType.Number => "int",
+            XLDataType.Text => "string",
+            XLDataType.DateTime => "DateTime",
+            XLDataType.TimeSpan => "TimeSpan",
+            _ => throw new ArgumentOutOfRangeException(nameof(dataType), $"Not expected excel column data type: {dataType}")
+        };
     }
 }

@@ -1,15 +1,9 @@
 ﻿using System;
 using ClosedXML.Excel;
 using Maestria.Extensions;
-using Maestria.TypeProviders;
 
 namespace ExcelSample
 {
-    [ExcelProvider]
-    public partial class ExcelDto
-    {
-    }
-    
     public static class ExcelExtensions
     {
         public static int ColumnUsedCount(this IXLWorksheet sheet)

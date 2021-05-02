@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Maestria.TypeProviders
+namespace Maestria.TypeProviders.Generators
 {
     public class SyntaxReceiver : ISyntaxReceiver
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using ClosedXML.Excel;
 
-namespace Maestria.TypeProviders
+namespace Maestria.TypeProviders.Generators
 {
     internal static class ExcelExtensions
     {
@@ -9,7 +9,7 @@ namespace Maestria.TypeProviders
         {
             return sheet.LastColumnUsed().ColumnNumber();
         }
-
+        
         public static int ColumnByName(this IXLWorksheet sheet, string columnName)
         {
             if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentNullException(nameof(columnName), "Informe o nome da coluna para obter posição!");
