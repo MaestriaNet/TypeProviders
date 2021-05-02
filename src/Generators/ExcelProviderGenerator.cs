@@ -78,12 +78,19 @@ namespace {namespaceName}
     {{
         public static IEnumerable<{classSymbol.Name}> Load(Stream input)
         {{
-             throw new NotImplementedException();
+            using var workbook = new XLWorkbook(input);
+            return Load(workbook);
         }}
 
         public static IEnumerable<{classSymbol.Name}> Load(string filePath)
         {{
             using var workbook = new XLWorkbook(filePath);
+            return Load(workbook);
+        }}
+
+        public static IEnumerable<{classSymbol.Name}> Load(XLWorkbook workbook)
+        {{
+            var result = new List<{classSymbol.Name}>();
             var sheet = workbook.Worksheet(1);
             foreach (var row in sheet.Rows(2, sheet.Rows().Count()))
             {{
@@ -93,16 +100,17 @@ namespace {namespaceName}
                 source.Append($"                var {column.Name.ToCamelCase()}Value = row.Cell(sheet.ColumnByName(\"{column.Name}\")).Value;\r\n");
             }
             
-            source.Append(@$"                yield return new {classSymbol.Name}
+            source.Append(@$"                result.Add(new {classSymbol.Name}
                 {{
 ");
             foreach (var column in columns)
             {
                 source.Append($"                    {column.Name} = {column.GetCastSourceCode(column.Name.ToCamelCase() + "Value")},\r\n");
             }
-            source.Append("                };\r\n");
+            source.Append("                });\r\n");
 
-                source.Append(@$"            }}
+            source.Append(@$"            }}
+            return result;
         }}
     }}
 }}");

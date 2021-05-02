@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using ClosedXML.Excel;
 using Maestria.FluentCast;
@@ -7,7 +6,7 @@ using Maestria.TypeProviders.Attributes;
 
 namespace ExcelSample
 {
-    [ExcelProvider]
+    [ExcelProvider("")]
     public partial class MyExcelData
     {
     }
