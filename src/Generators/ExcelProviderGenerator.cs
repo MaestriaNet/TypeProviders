@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using Maestria.TypeProviders.Core;
+using Maestria.TypeProviders.Generators.AttributesCopy;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -17,7 +19,7 @@ namespace Maestria.TypeProviders.Generators
 
         private void Log(string value)
         {
-            // _log.AppendLine(value);
+            _log.AppendLine(value);
         }
 
         public void Initialize(GeneratorInitializationContext context)
@@ -28,20 +30,18 @@ namespace Maestria.TypeProviders.Generators
         public void Execute(GeneratorExecutionContext context)
         {
             Log($"Execute: {DateTime.Now}");
-                
-            if (context.SyntaxReceiver is not SyntaxReceiver receiver)
+            Log(new string('-', 50));
+            
+            if (context.SyntaxContextReceiver is not SyntaxReceiver receiver)
                 return;
-            
+
             var classSymbols = GetClassSymbols(context, receiver);
-            var classNames = new Dictionary<string, int>();
-            
             foreach (var classSymbol in classSymbols)
             {
-                Log($"Class Symbol: {classSymbol.Name}");
-                classNames.TryGetValue(classSymbol.Name, out var i);
-                var name = i == 0 ? classSymbol.Name : $"{classSymbol.Name}{i + 1}";
-                classNames[classSymbol.Name] = i + 1;
-                context.AddSource($"{name}.ExcelTypeProvider.g.cs",
+                Log($"Class Symbol: {classSymbol.ToDisplayString()}");
+                var name = classSymbol.ToDisplayString();
+                context.AddSource(
+                    $"{name}.ExcelTypeProvider.cs",
                     SourceText.From(CreateExcelProvider(classSymbol), Encoding.UTF8));
             }
 
@@ -52,13 +52,41 @@ namespace Maestria.TypeProviders.Generators
             }
         }
 
+        private ExcelProviderCopyAttribute GetExcelProviderAttribute(INamedTypeSymbol symbol)
+        {
+            var location = symbol.Locations.FirstOrDefault();
+            var basePath = string.IsNullOrWhiteSpace(location?.GetLineSpan().Path) ? "" : Path.GetDirectoryName(location.GetLineSpan().Path); 
+            Log($"basePath: {basePath}");
+            
+            var attributes = symbol.GetAttributes()
+                .Single(x => x.AttributeClass!.ToDisplayString() == ExcelProviderAttribute.TypeFullName)
+                .NamedArguments;
+
+            var templatePathAtt =
+                attributes.FirstOrDefault(x => x.Key == nameof(ExcelProviderCopyAttribute.TemplatePath));
+            var templatePath = templatePathAtt.Value.Value.ToString();
+
+            if (!File.Exists(templatePath))
+                templatePath = Path.Combine(basePath, templatePath);
+            
+            var result = new ExcelProviderCopyAttribute();
+            result.TemplatePath = templatePath;
+            return result;
+        }
+
         private string CreateExcelProvider(INamedTypeSymbol classSymbol)
         {
+            var attribute = GetExcelProviderAttribute(classSymbol);
+            Log($"TemplatePath: {attribute.TemplatePath}");
+            if (!File.Exists(attribute.TemplatePath))
+                throw new ArgumentException($"Excel template file not found: {attribute.TemplatePath}");
+            
+            
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-            var columns = GetExcelColumns();
+            var columns = GetExcelColumns(attribute.TemplatePath);
              
-             var source = new StringBuilder(
-$@"using System;
+             var source = new StringBuilder($@"
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,10 +99,8 @@ namespace {namespaceName}
     public partial class {classSymbol.Name}
     {{
 ");
-             foreach (var column in columns)
-             {
+             foreach (var column in columns) 
                  source.Append($"        {column.GetSourceCode()}\r\n");
-             }
 
              source.Append(@$"
     }}
@@ -126,25 +152,19 @@ namespace {namespaceName}
         {
             var compilation = context.Compilation;
 
-            /*return receiver.CandidateClasses
+            return receiver.CandidateClasses
                 .Select(x => compilation
                     .GetSemanticModel(x.SyntaxTree)
                     .GetDeclaredSymbol(x))
-                .Where(x => HasAttribute(x, nameof(ExcelProviderAttribute)));*/
-            return from clazz in receiver.CandidateClasses
-                let model = compilation.GetSemanticModel(clazz.SyntaxTree)
-                select model.GetDeclaredSymbol(clazz)! into classSymbol
-                where HasAttribute(classSymbol, nameof(ExcelProviderAttribute))
-                select classSymbol;
+                .Where(x => HasAttribute(x, ExcelProviderAttribute.TypeFullName));
         }
         
-        private static bool HasAttribute(ISymbol symbol, string name) => symbol
+        private static bool HasAttribute(ISymbol symbol, string typeFullName) => symbol
             .GetAttributes()
-            .Any(x => x.AttributeClass?.Name == name);
+            .Any(x => x.AttributeClass?.ToDisplayString() == typeFullName);
 
-        private static IEnumerable<Models.Field> GetExcelColumns()
+        private static IEnumerable<Models.Field> GetExcelColumns(string filePath)
         {
-            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet("Plan1");
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)

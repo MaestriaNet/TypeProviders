@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
 using Maestria.FluentCast;
@@ -6,7 +7,7 @@ using Maestria.TypeProviders.Core;
 
 namespace ExcelSample
 {
-    [ExcelProvider(@"..\..\resources\Excel.xlsx")]
+    [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
     public partial class MyExcelData
     {
     }
@@ -16,20 +17,19 @@ namespace ExcelSample
         public static void Main(string[] args)
         {
             Console.WriteLine("Excel Sample");
-            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
-
+            var exeDirectory = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            var filePath = Path.Combine(exeDirectory, @"../../../../../resources/Excel.xlsx");
+            
             var data = MyExcelDataFactory.Load(filePath);
             foreach (var item in data)
             {
                 Console.WriteLine($"{item.Id}\t{item.Name}");
             }
-
-            //var teste = new GeneratedClass.SeattleCompanies();
         }
 
         public static void LoadWithClosedXml()
         {
-            const string filePath = @"C:\sources\open-source\maestria\TypeProviders\resources\Excel.xlsx";
+            const string filePath = @"..\..\..\..\..\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet(1);
 
