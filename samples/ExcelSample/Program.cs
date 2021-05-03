@@ -12,6 +12,11 @@ namespace ExcelSample
     {
     }
     
+    [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
+    public partial class MyExcelData2
+    {
+    }
+    
     static class Program
     {
         public static void Main(string[] args)
@@ -27,7 +32,7 @@ namespace ExcelSample
             }
         }
 
-        public static void LoadWithClosedXml()
+        /*public static void LoadWithClosedXml()
         {
             const string filePath = @"..\..\..\..\..\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
@@ -46,6 +51,6 @@ namespace ExcelSample
                 var name = row.Cell(sheet.ColumnByName("Name")).Value.ToString();
                 Console.WriteLine($"{id} | {name}");
             }
-        }
+        }*/
     }
 }
