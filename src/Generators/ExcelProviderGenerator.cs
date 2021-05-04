@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
+using Maestria.FluentCast;
 using Maestria.TypeProviders.Core;
 using Maestria.TypeProviders.Generators.AttributesCopy;
 using Microsoft.CodeAnalysis;
@@ -171,23 +173,54 @@ namespace {namespaceName}
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet("Plan1");
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
+            {
+                var headerCell = sheet.Row(1).Cell(i);
                 yield return new Models.Field
                 {
-                    SourceName = sheet.Row(1).Cell(i).Value.ToString(),
-                    PropertyName = sheet.Row(1).Cell(i).Value.ToString().Replace(" ", ""),
-                    DataType = GetFieldDataType(sheet.Row(2).Cell(i).DataType)
+                    SourceName = headerCell.Value.ToString(),
+                    PropertyName = headerCell.Value.ToString().Replace(" ", ""),
+                    DataType = GetFieldDataType(sheet, i)
                 };
+            }
         }
 
-        private static string GetFieldDataType(XLDataType dataType) => dataType switch
+        private static string GetFieldDataType(IXLWorksheet sheet, int columnIndex)
         {
-            XLDataType.Boolean => "bool",
-            XLDataType.Number => "int",
-            XLDataType.Text => "string",
-            XLDataType.DateTime => "DateTime",
-            XLDataType.TimeSpan => "TimeSpan",
-            _ => throw new ArgumentOutOfRangeException(nameof(dataType), $"Not expected excel column data type: {dataType}")
-        };
+            var rows = sheet.RowsUsed()
+                .Where(x =>
+                    x.Cell(columnIndex).Value != null && 
+                    x.Cell(columnIndex).Value.ToString() != string.Empty)
+                .ToImmutableArray();
+            if (rows.Length < 2)
+                return "object";
+            
+            var cell = rows[1].Cell(columnIndex);
+            if (cell.DataType == XLDataType.Text)
+                return "string";
+            
+            var hasNull = sheet.RowsUsed().Any(x => 
+                x.Cell(columnIndex).CachedValue == null ||
+                x.Cell(columnIndex).CachedValue.ToString() == string.Empty);
+            if (cell.DataType == XLDataType.Number)
+            {
+                var isDecimal = rows.Any(x =>
+                    x.Cell(columnIndex).CachedValue != null &&
+                    x.Cell(columnIndex).CachedValue.ToInt32Safe() != x.Cell(columnIndex).CachedValue.ToDecimalSafe());
+
+                return (isDecimal ? "decimal" : "int") + (hasNull ? "?" : "");
+            }
+            
+            var dataType = cell.DataType switch
+            {
+                XLDataType.Boolean => "bool",
+                XLDataType.DateTime => "DateTime",
+                XLDataType.TimeSpan => "TimeSpan",
+                _ => throw new ArgumentOutOfRangeException(nameof(cell.DataType), $"Not expected excel column data type: {cell.DataType}")
+            };
+            if (hasNull)
+                dataType += "?";
+            return dataType;
+        }
 
         private static string GetExcelExtensionsSourceCode()
         {
