@@ -128,7 +128,7 @@ namespace {namespaceName}
         {{
             var result = new List<{classSymbol.Name}>();
             var sheet = workbook.Worksheet(1);
-            foreach (var row in sheet.RowsUsed(2, sheet.Rows().Count()))
+            foreach (var row in sheet.Rows(2, sheet.Rows().Count()))
             {{
 ");
             foreach (var column in columns)
