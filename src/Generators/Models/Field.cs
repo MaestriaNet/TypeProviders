@@ -21,7 +21,9 @@ namespace Maestria.TypeProviders.Generators.Models
             "string" => $"{variableName}.ToString()",
             "DateTime" => $"{variableName}.ToDateTime()",
             "DateTime?" => $"{variableName}.ToDateTimeSafe()",
-            _ => $"/* Skiped assignment {variableName}: {DataType} */"
+            "TimeSpan" => $"{variableName}.ToTimeSpan()",
+            "TimeSpan?" => $"{variableName}.ToTimeSpanSafe()",
+            _ => $"null /* Skiped assignment {variableName}: {DataType} */"
         };
     }
 }
