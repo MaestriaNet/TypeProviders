@@ -8,8 +8,9 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.1</Version>
+        <Version>0.0.2</Version>
         <LangVersion>9.0</LangVersion>
+        <IncludeBuildOutput>true</IncludeBuildOutput>
     </PropertyGroup>
 
     <ItemGroup>
