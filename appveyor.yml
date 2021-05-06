@@ -9,8 +9,10 @@ build_script:
 test_script:
   - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:
-  - path: src\bin\Release\*.nupkg
-    name: Nuget Package
+  - path: src\Core\bin\Release\*.nupkg
+    name: Nuget Package Core
+  - path: src\Generators\bin\Release\*.nupkg
+    name: Nuget Package Generators
 deploy:
   - provider: Environment
     name: Maestria MyGet
