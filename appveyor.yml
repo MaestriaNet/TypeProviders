@@ -1,18 +1,11 @@
-version: '2.0.8.{build}'
+version: '0.0.1.{build}'
 image: Visual Studio 2019
 configuration: Release
-dotnet_csproj:
-  patch: true
-  file: 'src\Extensions.csproj'
-  version: '2.0.8'
-  package_version: '2.0.8'
-  assembly_version: '2.0.8'
-  file_version: '2.0.8'
-  informational_version: '2.0.8'
 before_build:
   - ps: dotnet --version
+  - ps: dotnet restore TypeProviders.sln
 build_script:
-  - ps: dotnet build
+  - ps: dotnet build TypeProviders.sln
 test_script:
   - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:

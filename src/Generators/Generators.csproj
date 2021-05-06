@@ -7,10 +7,9 @@
         <PackageId>Maestria.TypeProviders.Generators</PackageId>
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
-        <LangVersion>9.0</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-<!--        <IncludeBuildOutput>false</IncludeBuildOutput>-->
         <Version>0.0.1</Version>
+        <LangVersion>9.0</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

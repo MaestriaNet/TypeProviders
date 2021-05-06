@@ -14,7 +14,7 @@
         </ItemGroup>
         <Delete Files="@(Generated)" />
     </Target>
-    
+
     <ItemGroup>
       <PackageReference Include="ClosedXML" Version="0.95.4" />
       <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />

@@ -7,7 +7,7 @@
         <PackageId>Maestria.TypeProviders.Core</PackageId>
         <Product>Maestria.TypeProviders.Core</Product>
         <RootNamespace>Maestria.TypeProviders.Core</RootNamespace>
-        <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Version>0.0.1</Version>
     </PropertyGroup>
 
