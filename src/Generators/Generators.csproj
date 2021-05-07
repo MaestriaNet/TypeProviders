@@ -8,9 +8,11 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.4</Version>
+        <Version>0.0.5</Version>
         <LangVersion>9.0</LangVersion>
-        <IncludeBuildOutput>true</IncludeBuildOutput>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <DevelopmentDependency>true</DevelopmentDependency>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,7 +29,6 @@
         <PackageReference Include="DocumentFormat.OpenXml" Pack="true" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Maestria.FluentCast" Pack="true" Version="1.0.5" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.Drawing.Common" Pack="true" Version="4.5.0" GeneratePathProperty="true" />
-        <PackageReference Include="System.IO.Packaging" Pack="true" Version="4.0.0" GeneratePathProperty="true" />
         <PackageReference Include="System.IO.Packaging" Pack="true" Version="4.0.0" GeneratePathProperty="true" />
     </ItemGroup>
 
