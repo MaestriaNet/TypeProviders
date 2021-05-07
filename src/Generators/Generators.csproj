@@ -8,7 +8,7 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.9</Version>
+        <Version>0.0.10</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>true</IncludeBuildOutput>
@@ -34,12 +34,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Core\Core.csproj" PrivateAssets="all" GeneratePathProperty="true" />
+        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PKGDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PKGMaestria_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
-
-    <PropertyGroup>
-        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
-    </PropertyGroup>
     
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
@@ -50,6 +50,14 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="true" />
         </ItemGroup>
     </Target>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Core\Core.csproj" PrivateAssets="all" GeneratePathProperty="true" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+    </PropertyGroup>
 
     <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
         <PropertyGroup>

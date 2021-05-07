@@ -18,12 +18,12 @@
                 <dependency id="Maestria.FluentCast" version="1.0.5" />
                 <dependency id="System.Drawing.Common" version="4.5.0" />
                 <dependency id="System.IO.Packaging" version="4.0.0" />
-                <dependency id="Maestria.TypeProviders.Core" version="0.0.9" />
+                <dependency id="Maestria.TypeProviders.Core" version="0.0.10" />
             </group>
         </dependencies>
     </metadata>
 
     <files>
-        <file src="$outputPath$Generators.dll" target="analyzers\dotnet\cs" />
+        <file src="$outputPath$*.dll" target="analyzers\dotnet\cs" />
     </files>
 </package>
