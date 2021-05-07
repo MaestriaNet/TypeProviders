@@ -8,7 +8,7 @@
         <Product>Maestria.TypeProviders.Core</Product>
         <RootNamespace>Maestria.TypeProviders.Core</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.3</Version>
+        <Version>0.0.4</Version>
     </PropertyGroup>
 
 </Project>
