@@ -8,7 +8,7 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.10</Version>
+        <Version>0.0.11</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>true</IncludeBuildOutput>
@@ -43,11 +43,11 @@
     
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="true" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="true" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGMaestria_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="true" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="true" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="true" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGMaestria_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
 
