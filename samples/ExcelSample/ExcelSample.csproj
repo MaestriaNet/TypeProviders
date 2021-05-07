@@ -23,9 +23,14 @@
       <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
+    <!--<ItemGroup>
       <ProjectReference Include="..\..\src\Core\Core.csproj" />
       <ProjectReference Include="..\..\src\Generators\Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>-->
+
+    <ItemGroup>
+        <PackageReference Include="Maestria.TypeProviders.Core" Version="0.0.12" />
+        <PackageReference Include="Maestria.TypeProviders.Generators" Version="0.0.12" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
 </Project>
