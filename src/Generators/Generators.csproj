@@ -8,7 +8,8 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.6</Version>
+        <Version>0.0.7</Version>
+        <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>true</IncludeBuildOutput>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
@@ -48,6 +49,12 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="true" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="true" />
         </ItemGroup>
+    </Target>
+
+    <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
+        <PropertyGroup>
+            <NuspecProperties>outputPath=$(OutputPath);version=$(PackageVersion);restEaseVersion=$(VersionPrefix)</NuspecProperties>
+        </PropertyGroup>
     </Target>
 
 </Project>
