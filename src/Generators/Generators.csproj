@@ -8,9 +8,9 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.5</Version>
+        <Version>0.0.6</Version>
         <LangVersion>9.0</LangVersion>
-        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <IncludeBuildOutput>true</IncludeBuildOutput>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <DevelopmentDependency>true</DevelopmentDependency>
     </PropertyGroup>

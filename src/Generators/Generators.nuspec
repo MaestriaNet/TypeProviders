@@ -19,7 +19,7 @@
                 <dependency id="Maestria.FluentCast" version="1.0.5" />
                 <dependency id="System.Drawing.Common" version="4.5.0" />
                 <dependency id="System.IO.Packaging" version="4.0.0" />
-                <dependency id="Maestria.TypeProviders.Core" version="0.0.5" />
+                <dependency id="Maestria.TypeProviders.Core" version="0.0.6" />
             </group>
         </dependencies>
     </metadata>
