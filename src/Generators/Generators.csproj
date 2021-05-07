@@ -8,7 +8,7 @@
         <Product>Maestria.TypeProviders.Generators</Product>
         <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.7</Version>
+        <Version>0.0.8</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>true</IncludeBuildOutput>
