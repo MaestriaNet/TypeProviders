@@ -8,8 +8,8 @@ before_build:
 build_script:
   - ps: dotnet build src\Core\Core.csproj
   - ps: dotnet build src\Generators\Generators.csproj
-test_script:
-  - ps: dotnet test --test-adapter-path:. --logger:Appveyor
+#test_script:
+#  - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:
   - path: src\Core\bin\Release\*.nupkg
     name: Nuget Package Core
