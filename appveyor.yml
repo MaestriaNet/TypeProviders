@@ -3,18 +3,14 @@ image: Visual Studio 2019
 configuration: Release
 before_build:
   - ps: dotnet --version
-  - ps: dotnet restore src\Core\Core.csproj
-  - ps: dotnet restore src\Generators\Generators.csproj
+  - ps: dotnet restore src\TypeProviders.csproj
 build_script:
-  - ps: dotnet build src\Core\Core.csproj
-  - ps: dotnet build src\Generators\Generators.csproj
+  - ps: dotnet build src\TypeProviders.csproj
 #test_script:
 #  - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:
-  - path: src\Core\bin\Release\*.nupkg
-    name: Nuget Package Core
-  - path: src\Generators\bin\Release\*.nupkg
-    name: Nuget Package Generators
+  - path: src\bin\Release\*.nupkg
+    name: Nuget Package
 deploy:
   - provider: Environment
     name: Maestria MyGet
