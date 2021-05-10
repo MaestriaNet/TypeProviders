@@ -6,37 +6,45 @@ using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using Maestria.FluentCast;
-using Maestria.TypeProviders.Core;
-using Maestria.TypeProviders.Generators.AttributesCopy;
+using Maestria.TypeProviders.DTO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Maestria.TypeProviders.Generators
+namespace Maestria.TypeProviders.Excel
 {
     [Generator]
-    public class ExcelProviderGenerator : ISourceGenerator
+    public class ExcelGenerator : ISourceGenerator
     {
         private StringBuilder _log = new StringBuilder();
 
         private void Log(string value)
         {
-            _log.AppendLine(value);
+            //_log.AppendLine(value);
         }
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
+            context.RegisterForSyntaxNotifications(() => new ExcelContextReceiver());
+            context.RegisterForPostInitialization(ctx =>
+            {
+                ctx.AddSource("ExcelProviderAttribute.cs", GeneratorExtensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs"));
+                ctx.AddSource("ExcelExtensions.cs", GeneratorExtensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
+            });
         }
 
         public void Execute(GeneratorExecutionContext context)
         {
+            /*context.ReportDiagnostic(Diagnostic.Create(
+                "ABC", "ERROR", "AAAAA", DiagnosticSeverity.Error, DiagnosticSeverity.Error, true,
+                0));*/
+            
             Log($"Execute: {DateTime.Now}");
             Log(new string('-', 50));
-            
-            if (context.SyntaxContextReceiver is not SyntaxReceiver receiver)
-                return;
 
+            if (context.SyntaxContextReceiver is not ExcelContextReceiver receiver)
+                return;
+            
             var classSymbols = GetClassSymbols(context, receiver);
             foreach (var classSymbol in classSymbols)
             {
@@ -46,8 +54,6 @@ namespace Maestria.TypeProviders.Generators
                     $"{name}.ExcelTypeProvider.cs",
                     SourceText.From(CreateExcelProvider(classSymbol), Encoding.UTF8));
             }
-            
-            context.AddSource("ExcelExtensions.cs", SourceText.From(GetExcelExtensionsSourceCode(), Encoding.UTF8));
 
             if (_log.Length > 0)
             {
@@ -56,7 +62,7 @@ namespace Maestria.TypeProviders.Generators
             }
         }
 
-        private ExcelProviderCopyAttribute GetExcelProviderAttribute(INamedTypeSymbol symbol)
+        private ExcelProviderAttribute GetExcelProviderAttribute(INamedTypeSymbol symbol)
         {
             var location = symbol.Locations.FirstOrDefault();
             var basePath = string.IsNullOrWhiteSpace(location?.GetLineSpan().Path) ? "" : Path.GetDirectoryName(location.GetLineSpan().Path); 
@@ -67,13 +73,13 @@ namespace Maestria.TypeProviders.Generators
                 .NamedArguments;
 
             var templatePathAtt =
-                attributes.FirstOrDefault(x => x.Key == nameof(ExcelProviderCopyAttribute.TemplatePath));
+                attributes.FirstOrDefault(x => x.Key == nameof(ExcelProviderAttribute.TemplatePath));
             var templatePath = templatePathAtt.Value.Value.ToString();
 
             if (!File.Exists(templatePath))
                 templatePath = Path.Combine(basePath, templatePath);
             
-            var result = new ExcelProviderCopyAttribute();
+            var result = new ExcelProviderAttribute();
             result.TemplatePath = templatePath;
             return result;
         }
@@ -97,7 +103,7 @@ using System.Linq;
 using System.IO;
 using ClosedXML.Excel;
 using Maestria.FluentCast;
-using Maestria.TypeProviders.Generators;
+using Maestria.TypeProviders.Excel;
 
 namespace {namespaceName}
 {{
@@ -153,7 +159,7 @@ namespace {namespaceName}
              return source.ToString();
         }
 
-        private static IEnumerable<INamedTypeSymbol> GetClassSymbols(GeneratorExecutionContext context, SyntaxReceiver receiver)
+        private static IEnumerable<INamedTypeSymbol> GetClassSymbols(GeneratorExecutionContext context, ExcelContextReceiver receiver)
         {
             var compilation = context.Compilation;
 
@@ -168,14 +174,14 @@ namespace {namespaceName}
             .GetAttributes()
             .Any(x => x.AttributeClass?.ToDisplayString() == typeFullName);
 
-        private static IEnumerable<Models.Field> GetExcelColumns(string filePath)
+        private static IEnumerable<FieldMapInfo> GetExcelColumns(string filePath)
         {
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet("Plan1");
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
             {
                 var headerCell = sheet.Row(1).Cell(i);
-                yield return new Models.Field
+                yield return new FieldMapInfo
                 {
                     SourceName = headerCell.Value.ToString(),
                     PropertyName = headerCell.Value.ToString().Replace(" ", ""),
@@ -188,17 +194,17 @@ namespace {namespaceName}
         {
             var rows = sheet.RowsUsed()
                 .Where(x =>
-                    x.Cell(columnIndex).Value != null && 
+                    x.Cell(columnIndex).Value != null &&
                     x.Cell(columnIndex).Value.ToString() != string.Empty)
                 .ToImmutableArray();
             if (rows.Length < 2)
                 return "object";
-            
+
             var cell = rows[1].Cell(columnIndex);
             if (cell.DataType == XLDataType.Text)
                 return "string";
-            
-            var hasNull = sheet.RowsUsed().Any(x => 
+
+            var hasNull = sheet.RowsUsed().Any(x =>
                 x.Cell(columnIndex).CachedValue == null ||
                 x.Cell(columnIndex).CachedValue.ToString() == string.Empty);
             if (cell.DataType == XLDataType.Number)
@@ -209,47 +215,18 @@ namespace {namespaceName}
 
                 return (isDecimal ? "decimal" : "int") + (hasNull ? "?" : "");
             }
-            
+
             var dataType = cell.DataType switch
             {
                 XLDataType.Boolean => "bool",
                 XLDataType.DateTime => "DateTime",
                 XLDataType.TimeSpan => "TimeSpan",
-                _ => throw new ArgumentOutOfRangeException(nameof(cell.DataType), $"Not expected excel column data type: {cell.DataType}")
+                _ => throw new ArgumentOutOfRangeException(nameof(cell.DataType),
+                    $"Not expected excel column data type: {cell.DataType}")
             };
             if (hasNull)
                 dataType += "?";
             return dataType;
-        }
-
-        private static string GetExcelExtensionsSourceCode()
-        {
-            var source = new StringBuilder();
-            source.AppendLine(@"
-using System;
-using ClosedXML.Excel;
-
-namespace Maestria.TypeProviders.Generators
-{
-    public static class ExcelExtensions
-    {
-        public static int ColumnUsedCount(this IXLWorksheet sheet)
-        {
-            return sheet.LastColumnUsed().ColumnNumber();
-        }
-    
-        public static int ColumnByName(this IXLWorksheet sheet, string columnName)
-        {
-            if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentNullException(nameof(columnName), ""Informe o nome da coluna para obter posição!"");
-            if (sheet.RowCount() <= 0) return 0;
-            for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
-                if (sheet.Row(1).Cell(i).Value.ToString()?.ToUpper() == columnName.ToUpper()) return i;
-            return 0;
-        }
-    }
-}
-");
-            return source.ToString();
         }
     }
 }

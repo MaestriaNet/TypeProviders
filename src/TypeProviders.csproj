@@ -4,11 +4,11 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <Authors>Fábio Monteiro Naspolini</Authors>
         <Company>Fábio Monteiro Naspolini</Company>
-        <PackageId>Maestria.TypeProviders.Generators</PackageId>
-        <Product>Maestria.TypeProviders.Generators</Product>
-        <RootNamespace>Maestria.TypeProviders.Generators</RootNamespace>
+        <PackageId>Maestria.TypeProviders</PackageId>
+        <Product>Maestria.TypeProviders</Product>
+        <RootNamespace>Maestria.TypeProviders</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.13</Version>
+        <Version>0.0.14</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -40,6 +40,11 @@
         <None Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
         <None Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
+      <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
+    </ItemGroup>
     
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
@@ -50,11 +55,7 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Core\Core.csproj" PrivateAssets="all" GeneratePathProperty="true" />
-    </ItemGroup>
-
+    
     <PropertyGroup>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     </PropertyGroup>

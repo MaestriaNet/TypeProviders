@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.IO;
-using System.Linq;
-using ClosedXML.Excel;
-using Maestria.FluentCast;
-using Maestria.TypeProviders.Core;
-using Maestria.TypeProviders.Generators;
+using Maestria.TypeProviders.Excel;
 
 namespace ExcelSample
 {
-    [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
+    [ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
     public partial class MyExcelData
     {
     }
@@ -46,7 +41,7 @@ namespace ExcelSample
                 Console.WriteLine($"{item.Codigo}\t{item.CPF}\t{item.Nome}\t{item.Telefone}\t{item.Endereco}");
         }
 
-        private static void LoadWithClosedXml()
+        /*private static void LoadWithClosedXml()
         {
             const string filePath = @"..\..\..\..\..\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
@@ -105,6 +100,6 @@ namespace ExcelSample
             if (hasNull)
                 dataType += "?";
             return dataType;
-        }
+        }*/
     }
 }

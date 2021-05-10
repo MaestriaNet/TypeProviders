@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
-        <id>Maestria.TypeProviders.Generators</id>
+        <id>Maestria.TypeProviders</id>
         <version>$version$</version>
         <authors>Fábio Monteiro Naspolini</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/trampster/JsonSrcGen</projectUrl>
-        <description>.NET 5 C# Source Generators.</description>
+        <description>.NET 5 C# Source TypeProviders.</description>
         <copyright>Copyright © Fábio Monteiro Naspolini 2020</copyright>
         <tags>Maestria SourceGenerator</tags>
         <repository type="git" url="https://github.com/MaestriaNet/TypeProviders" />

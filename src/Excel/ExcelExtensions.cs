@@ -1,7 +1,7 @@
 ﻿using System;
 using ClosedXML.Excel;
 
-namespace Maestria.TypeProviders.Generators
+namespace Maestria.TypeProviders.Excel
 {
     public static class ExcelExtensions
     {

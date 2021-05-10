@@ -16,21 +16,20 @@
     </Target>
 
     <ItemGroup>
-      <PackageReference Include="ClosedXML" Version="0.95.0" />
+      <PackageReference Include="ClosedXML" Version="0.95.4" />
       <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
       <PackageReference Include="Maestria.Extensions" Version="2.0.8" />
       <PackageReference Include="Maestria.FluentCast" Version="1.0.5" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
-    <!--<ItemGroup>
-      <ProjectReference Include="..\..\src\Core\Core.csproj" />
-      <ProjectReference Include="..\..\src\Generators\Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>-->
-
     <ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders.Core" Version="0.0.12" />
-        <PackageReference Include="Maestria.TypeProviders.Generators" Version="0.0.13" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+      <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
+
+    <!--<ItemGroup>
+        <PackageReference Include="Maestria.TypeProviders.Core" Version="0.0.12" />
+        <PackageReference Include="Maestria.TypeProviders.Excel" Version="0.0.14" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>-->
 
 </Project>

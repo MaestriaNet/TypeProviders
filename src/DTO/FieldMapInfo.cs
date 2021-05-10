@@ -1,8 +1,6 @@
-﻿using DocumentFormat.OpenXml.Drawing.Charts;
-
-namespace Maestria.TypeProviders.Generators.Models
+﻿namespace Maestria.TypeProviders.DTO
 {
-    public class Field
+    public class FieldMapInfo
     {
         public string SourceName { get; set; }
         public string PropertyName { get; set; }

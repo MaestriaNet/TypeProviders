@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Maestria.TypeProviders.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Maestria.TypeProviders.Generators
+namespace Maestria.TypeProviders.Excel
 {
-    public class SyntaxReceiver : ISyntaxContextReceiver
+    public class ExcelContextReceiver : ISyntaxContextReceiver
     {
         public IList<ClassDeclarationSyntax> CandidateClasses { get; } = new List<ClassDeclarationSyntax>();
 
