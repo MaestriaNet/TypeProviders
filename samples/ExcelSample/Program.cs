@@ -14,8 +14,9 @@ namespace ExcelSample
     {
     }
     
-    [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
-    public partial class MyExcelData2
+    
+    [ExcelProvider(TemplatePath = @"../../resources/Exemplo.xlsx")]
+    public partial class ExemploData
     {
     }
     
@@ -31,11 +32,18 @@ namespace ExcelSample
         private static void LoadWithGenerators()
         {
             var exeDirectory = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            var filePath = Path.Combine(exeDirectory, @"../../../../../resources/Excel.xlsx");
             
+            Console.WriteLine("Excel.xlsx read");
+            var filePath = Path.Combine(exeDirectory, @"../../../../../resources/Excel.xlsx");
             var data = MyExcelDataFactory.Load(filePath);
             foreach (var item in data) 
                 Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Valor?.ToString("C2")}");
+            
+            Console.WriteLine();
+            Console.WriteLine("Exemplo.xlsx read");
+            var dataExemplo = ExemploDataFactory.Load(@"../../../../../resources/Exemplo.xlsx");
+            foreach (var item in dataExemplo) 
+                Console.WriteLine($"{item.Codigo}\t{item.CPF}\t{item.Nome}\t{item.Telefone}\t{item.Endereco}");
         }
 
         private static void LoadWithClosedXml()
