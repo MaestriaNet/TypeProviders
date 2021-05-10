@@ -11,7 +11,7 @@
         <copyright>Copyright © Fábio Monteiro Naspolini 2020</copyright>
         <tags>Maestria SourceGenerator</tags>
         <repository type="git" url="https://github.com/MaestriaNet/TypeProviders" />
-        <dependencies>
+        <!--<dependencies>
             <group>
                 <dependency id="ClosedXML" version="0.95.4" />
                 <dependency id="DocumentFormat.OpenXml" version="2.7.2" />
@@ -20,7 +20,7 @@
                 <dependency id="System.IO.Packaging" version="4.0.0" />
                 <dependency id="Maestria.TypeProviders.Core" version="0.0.12" />
             </group>
-        </dependencies>
+        </dependencies>-->
     </metadata>
 
     <files>
