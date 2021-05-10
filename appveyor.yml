@@ -3,9 +3,11 @@ image: Visual Studio 2019
 configuration: Release
 before_build:
   - ps: dotnet --version
-  - ps: dotnet restore TypeProviders.sln
+  - ps: dotnet restore src\Core\Core.csproj
+  - ps: dotnet restore src\Generators\Generators.csproj
 build_script:
-  - ps: dotnet build TypeProviders.sln
+  - ps: dotnet build src\Core\Core.csproj
+  - ps: dotnet build src\Generators\Generators.csproj
 test_script:
   - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:
