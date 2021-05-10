@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Immutable;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using ClosedXML.Excel;
+using Maestria.FluentCast;
 using Maestria.TypeProviders.Excel;
 
 namespace ExcelSample
@@ -8,40 +13,30 @@ namespace ExcelSample
     public partial class MyExcelData
     {
     }
-    
-    
-    [ExcelProvider(TemplatePath = @"../../resources/Exemplo.xlsx")]
-    public partial class ExemploData
-    {
-    }
-    
+
     static class Program
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Excel Sample");
-            LoadWithGenerators();
-            //LoadWithClosedXml();
+            Console.WriteLine("Maestria Type Provider Sample");
+            Console.WriteLine();
+            
+            LoadExcelWithMaestria();
+            //LoadExcelWithClosedXml();
         }
 
-        private static void LoadWithGenerators()
+        private static void LoadExcelWithMaestria()
         {
             var exeDirectory = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             
-            Console.WriteLine("Excel.xlsx read");
+            Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
             var filePath = Path.Combine(exeDirectory, @"../../../../../resources/Excel.xlsx");
             var data = MyExcelDataFactory.Load(filePath);
             foreach (var item in data) 
-                Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Valor?.ToString("C2")}");
-            
-            Console.WriteLine();
-            Console.WriteLine("Exemplo.xlsx read");
-            var dataExemplo = ExemploDataFactory.Load(@"../../../../../resources/Exemplo.xlsx");
-            foreach (var item in dataExemplo) 
-                Console.WriteLine($"{item.Codigo}\t{item.CPF}\t{item.Nome}\t{item.Telefone}\t{item.Endereco}");
+                Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Value:C2}\t\t{item.BirthDate:yyyy-MM-dd}");
         }
 
-        /*private static void LoadWithClosedXml()
+        private static void LoadExcelWithClosedXml()
         {
             const string filePath = @"..\..\..\..\..\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
@@ -100,6 +95,6 @@ namespace ExcelSample
             if (hasNull)
                 dataType += "?";
             return dataType;
-        }*/
+        }
     }
 }

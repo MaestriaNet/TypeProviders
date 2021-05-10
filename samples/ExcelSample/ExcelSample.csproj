@@ -28,7 +28,7 @@
     </ItemGroup>-->
 
     <ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders.Excel" Version="0.0.14" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <PackageReference Include="Maestria.TypeProviders" Version="0.0.14" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
 </Project>
