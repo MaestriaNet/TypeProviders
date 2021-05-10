@@ -6,7 +6,7 @@
         <authors>Fábio Monteiro Naspolini</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
-        <projectUrl>https://github.com/trampster/JsonSrcGen</projectUrl>
+        <projectUrl>https://github.com/MaestriaNet/TypeProviders</projectUrl>
         <description>.NET 5 C# Source TypeProviders.</description>
         <copyright>Copyright © Fábio Monteiro Naspolini 2020</copyright>
         <tags>Maestria SourceGenerator</tags>
