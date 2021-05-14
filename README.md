@@ -12,7 +12,38 @@
 
 Source Generator pack to increase productivity and improve source code writing.
 
+## How install and configure package?
+
+First, install [Maestria Type Providers](https://www.nuget.org/packages/Maestria.TypeProviders/) from the dotnet cli command line:
+
+```bash
+dotnet add package Maestria.TypeProviders
+```
+
+And configure at `.csproj` file to emit generated files on hard disk:
+
+```xml
+<!-- Enable source disk file write to correct IDE's works -->
+<PropertyGroup>
+    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated</CompilerGeneratedFilesOutputPath>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+</PropertyGroup>
+
+<!-- Remove files on build start to solve recreate bug message "alwaready exists" -->
+<Target Name="ExcludeGenerated" BeforeTargets="AssignTargetPaths">
+    <ItemGroup>
+        <Generated Include="generated/**/*.cs" />
+        <Compile Remove="@(Generated)" />
+    </ItemGroup>
+    <Delete Files="@(Generated)" />
+</Target>
+```
+
+[Sample of .csproj file](#samples/ExcelSample/ExcelSample.csproj#L7)
+
 ## Providers x Dependencies
+
+This package does not include dependencies on build output or project, you have install dependencies by your user case, bellow samples.
 
 ### Excel
 
@@ -25,7 +56,17 @@ Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)
 ```bash
 dotnet add package Maestria.FluentCast
 dotnet add package ClosedXML
-dotnet add package Maestria.TypeProviders
+```
+
+```csharp
+[ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
+public partial class MyExcelData
+{
+}
+
+var data = MyExcelDataFactory.Load(filePath);
+foreach (var item in data)
+  // Access strong typing by "data.<field-name>"
 ```
 
 [![buy-me-a-coffee](resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)

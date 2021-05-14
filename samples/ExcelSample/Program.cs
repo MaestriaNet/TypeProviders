@@ -20,7 +20,7 @@ namespace ExcelSample
         {
             Console.WriteLine("Maestria Type Provider Sample");
             Console.WriteLine();
-            
+
             LoadExcelWithMaestria();
             //LoadExcelWithClosedXml();
         }
@@ -28,11 +28,11 @@ namespace ExcelSample
         private static void LoadExcelWithMaestria()
         {
             var exeDirectory = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            
+
             Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
             var filePath = Path.Combine(exeDirectory, @"../../../../../resources/Excel.xlsx");
             var data = MyExcelDataFactory.Load(filePath);
-            foreach (var item in data) 
+            foreach (var item in data)
                 Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Value:C2}\t\t{item.BirthDate:yyyy-MM-dd}");
         }
 
@@ -41,7 +41,7 @@ namespace ExcelSample
             const string filePath = @"..\..\..\..\..\resources\Excel.xlsx";
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet(1);
-            
+
             Console.WriteLine("ColumnUsedCount: " + sheet.ColumnUsedCount());
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
             {
@@ -63,17 +63,17 @@ namespace ExcelSample
         {
             var rows = sheet.RowsUsed()
                 .Where(x =>
-                    x.Cell(columnIndex).Value != null && 
+                    x.Cell(columnIndex).Value != null &&
                     x.Cell(columnIndex).Value.ToString() != string.Empty)
                 .ToImmutableArray();
             if (rows.Length < 2)
                 return "object";
-            
+
             var cell = rows[1].Cell(columnIndex);
             if (cell.DataType == XLDataType.Text)
                 return "string";
-            
-            var hasNull = sheet.RowsUsed().Any(x => 
+
+            var hasNull = sheet.RowsUsed().Any(x =>
                 x.Cell(columnIndex).CachedValue == null ||
                 x.Cell(columnIndex).CachedValue.ToString() == string.Empty);
             if (cell.DataType == XLDataType.Number)
@@ -84,7 +84,7 @@ namespace ExcelSample
 
                 return (isDecimal ? "decimal" : "int") + (hasNull ? "?" : "");
             }
-            
+
             var dataType = cell.DataType switch
             {
                 XLDataType.Boolean => "bool",
