@@ -43,7 +43,7 @@ And configure at `.csproj` file to emit generated files on hard disk:
 
 ## Providers x Dependencies
 
-This package does not include dependencies on build output or project, you have install dependencies by your user case, bellow samples.
+This package does not include dependencies on build output or project, you need another install dependencies to generated source code use on you project, bellow instructions:
 
 ### Excel
 
