@@ -39,7 +39,7 @@ And configure at `.csproj` file to emit generated files on hard disk:
 </Target>
 ```
 
-[Sample of .csproj file](#samples/ExcelSample/ExcelSample.csproj#L7)
+[Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L7)
 
 ## Providers x Dependencies
 
