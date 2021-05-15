@@ -27,10 +27,10 @@ namespace ExcelSample
 
         private static void LoadExcelWithMaestria()
         {
-            var exeDirectory = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            var currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
-            var filePath = Path.Combine(exeDirectory, @"../../../../../resources/Excel.xlsx");
+            var filePath = Path.Combine(currentDir, @"../../../../../resources/Excel.xlsx");
             var data = MyExcelDataFactory.Load(filePath);
             foreach (var item in data)
                 Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Value:C2}\t\t{item.BirthDate:yyyy-MM-dd}");
