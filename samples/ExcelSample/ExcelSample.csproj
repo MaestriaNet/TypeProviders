@@ -23,12 +23,14 @@
       <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
+    <!-- Project reference to debug -->
     <!--<ItemGroup>
       <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>-->
 
+    <!-- NuGet package reference -->
     <ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders" Version="0.0.14" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <PackageReference Include="Maestria.TypeProviders" Version="0.0.14" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,15 +17,14 @@ namespace Maestria.TypeProviders.Excel
     [Generator]
     public class ExcelGenerator : ISourceGenerator
     {
-        private StringBuilder _log = new StringBuilder();
-
-        private void Log(string value)
-        {
-            //_log.AppendLine(value);
-        }
-
         public void Initialize(GeneratorInitializationContext context)
         {
+#if DEBUG
+            if (!Debugger.IsAttached)
+            {
+                Debugger.Launch();
+            }
+#endif
             context.RegisterForSyntaxNotifications(() => new ExcelContextReceiver());
             context.RegisterForPostInitialization(ctx =>
             {
@@ -38,36 +38,25 @@ namespace Maestria.TypeProviders.Excel
             /*context.ReportDiagnostic(Diagnostic.Create(
                 "ABC", "ERROR", "AAAAA", DiagnosticSeverity.Error, DiagnosticSeverity.Error, true,
                 0));*/
-            
-            Log($"Execute: {DateTime.Now}");
-            Log(new string('-', 50));
 
             if (context.SyntaxContextReceiver is not ExcelContextReceiver receiver)
                 return;
-            
+
             var classSymbols = GetClassSymbols(context, receiver);
             foreach (var classSymbol in classSymbols)
             {
-                Log($"Class Symbol: {classSymbol.ToDisplayString()}");
                 var name = classSymbol.ToDisplayString();
                 context.AddSource(
                     $"{name}.ExcelTypeProvider.cs",
                     SourceText.From(CreateExcelProvider(classSymbol), Encoding.UTF8));
-            }
-
-            if (_log.Length > 0)
-            {
-                var source = SourceText.From($"/*\n{_log}*/", Encoding.UTF8);
-                context.AddSource("Debug.cs", source);
             }
         }
 
         private ExcelProviderAttribute GetExcelProviderAttribute(INamedTypeSymbol symbol)
         {
             var location = symbol.Locations.FirstOrDefault();
-            var basePath = string.IsNullOrWhiteSpace(location?.GetLineSpan().Path) ? "" : Path.GetDirectoryName(location.GetLineSpan().Path); 
-            Log($"basePath: {basePath}");
-            
+            var basePath = string.IsNullOrWhiteSpace(location?.GetLineSpan().Path) ? "" : Path.GetDirectoryName(location.GetLineSpan().Path);
+
             var attributes = symbol.GetAttributes()
                 .Single(x => x.AttributeClass!.ToDisplayString() == ExcelProviderAttribute.TypeFullName)
                 .NamedArguments;
@@ -78,7 +67,7 @@ namespace Maestria.TypeProviders.Excel
 
             if (!File.Exists(templatePath))
                 templatePath = Path.Combine(basePath, templatePath);
-            
+
             var result = new ExcelProviderAttribute();
             result.TemplatePath = templatePath;
             return result;
@@ -87,14 +76,13 @@ namespace Maestria.TypeProviders.Excel
         private string CreateExcelProvider(INamedTypeSymbol classSymbol)
         {
             var attribute = GetExcelProviderAttribute(classSymbol);
-            Log($"TemplatePath: {attribute.TemplatePath}");
             if (!File.Exists(attribute.TemplatePath))
                 throw new ArgumentException($"Excel template file not found: {attribute.TemplatePath}");
-            
-            
+
+
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
             var columns = GetExcelColumns(attribute.TemplatePath);
-             
+
              var source = new StringBuilder($@"
 using System;
 using System.Collections;
@@ -110,7 +98,7 @@ namespace {namespaceName}
     public partial class {classSymbol.Name}
     {{
 ");
-             foreach (var column in columns) 
+             foreach (var column in columns)
                  source.Append($"        {column.GetSourceCode()}\r\n");
 
              source.Append(@$"
@@ -141,7 +129,7 @@ namespace {namespaceName}
             {
                 source.Append($"                var {column.PropertyName.ToCamelCase()}Value = row.Cell(sheet.ColumnByName(\"{column.SourceName}\")).Value;\r\n");
             }
-            
+
             source.Append(@$"                result.Add(new {classSymbol.Name}
                 {{
 ");
@@ -169,7 +157,7 @@ namespace {namespaceName}
                     .GetDeclaredSymbol(x))
                 .Where(x => HasAttribute(x, ExcelProviderAttribute.TypeFullName));
         }
-        
+
         private static bool HasAttribute(ISymbol symbol, string typeFullName) => symbol
             .GetAttributes()
             .Any(x => x.AttributeClass?.ToDisplayString() == typeFullName);

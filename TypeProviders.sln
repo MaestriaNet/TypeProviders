@@ -1,22 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18ED16EA-78EB-4F00-B017-4E23F6D6ADEC}"
-ProjectSection(SolutionItems) = preProject
-	appveyor.yml = appveyor.yml
-	README.md = README.md
-	.gitignore = .gitignore
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		README.md = README.md
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelSample", "samples\ExcelSample\ExcelSample.csproj", "{9277F59E-8EEF-41DE-A2D4-DC4C06B7A75E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelSample", "samples\ExcelSample\ExcelSample.csproj", "{9277F59E-8EEF-41DE-A2D4-DC4C06B7A75E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1B35FBAD-DF9D-428D-A068-70C512BCE99E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{61F46FBE-D55F-4D8A-8E1F-B19857E27225}"
-ProjectSection(SolutionItems) = preProject
-	resources\Excel.xlsx = resources\Excel.xlsx
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		resources\Excel.xlsx = resources\Excel.xlsx
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeProviders", "src\TypeProviders.csproj", "{B1F24388-95A4-4F94-B8DE-381649EBA40A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeProviders", "src\TypeProviders.csproj", "{B1F24388-95A4-4F94-B8DE-381649EBA40A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,7 +36,13 @@ Global
 		{B1F24388-95A4-4F94-B8DE-381649EBA40A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F24388-95A4-4F94-B8DE-381649EBA40A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9277F59E-8EEF-41DE-A2D4-DC4C06B7A75E} = {1B35FBAD-DF9D-428D-A068-70C512BCE99E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D03C4CDA-36F2-43CF-82D4-DD5D5CF5CE86}
 	EndGlobalSection
 EndGlobal
