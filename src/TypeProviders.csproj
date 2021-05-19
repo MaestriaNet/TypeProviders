@@ -8,7 +8,7 @@
         <Product>Maestria.TypeProviders</Product>
         <RootNamespace>Maestria.TypeProviders</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.14</Version>
+        <Version>1.0.0</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -29,23 +29,23 @@
         <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Maestria.FluentCast" Pack="false" Version="1.0.5" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" GeneratePathProperty="true" />
-        <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" GeneratePathProperty="true" />
+        <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
     </ItemGroup>
 
     <ItemGroup>
         <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PKGDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PKGMaestria_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PKGSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgMaestria_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
       <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
     </ItemGroup>
-    
+
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
             <TargetPathWithTargetPlatformMoniker Include="$(PKGClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
@@ -55,7 +55,7 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
-    
+
     <PropertyGroup>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     </PropertyGroup>

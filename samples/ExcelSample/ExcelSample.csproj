@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -24,13 +24,13 @@
     </ItemGroup>
 
     <!-- Project reference to debug -->
-    <!--<ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>-->
+    </ItemGroup>
 
     <!-- NuGet package reference -->
-    <ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders" Version="0.0.14" />
-    </ItemGroup>
+    <!--<ItemGroup>
+        <PackageReference Include="Maestria.TypeProviders" Version="1.0.0" />
+    </ItemGroup>-->
 
 </Project>

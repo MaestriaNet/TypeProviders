@@ -9,7 +9,7 @@ namespace Maestria.TypeProviders.Excel
         {
             return sheet.LastColumnUsed().ColumnNumber();
         }
-        
+
         public static int ColumnByName(this IXLWorksheet sheet, string columnName)
         {
             if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentNullException(nameof(columnName), "Informe o nome da coluna para obter posição!");
