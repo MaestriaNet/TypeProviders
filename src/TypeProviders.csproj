@@ -7,8 +7,9 @@
         <PackageId>Maestria.TypeProviders</PackageId>
         <Product>Maestria.TypeProviders</Product>
         <RootNamespace>Maestria.TypeProviders</RootNamespace>
+        <AssemblyName>Maestria.TypeProviders</AssemblyName>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -57,7 +58,7 @@
     </Target>
 
     <PropertyGroup>
-        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+      <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     </PropertyGroup>
 
     <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
