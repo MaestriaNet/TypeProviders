@@ -1,11 +1,11 @@
-version: '1.0.0.{build}'
+version: '1.0.1.{build}'
 image: Visual Studio 2019
 configuration: Release
 before_build:
   - ps: dotnet --version
   - ps: dotnet restore src\TypeProviders.csproj
 build_script:
-  - ps: dotnet build src\TypeProviders.csproj
+  - ps: dotnet build src\TypeProviders.csproj --configuration Release
 #test_script:
 #  - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:

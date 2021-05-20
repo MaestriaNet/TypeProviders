@@ -8,7 +8,7 @@ namespace Maestria.TypeProviders
     public static class GeneratorExtensions
     {
         public static string ToCamelCase(this string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
-        
+
         public static SourceText GetEmbeddedSourceCode(string resourceName)
         {
             var assembly = Assembly.GetExecutingAssembly();

@@ -33,7 +33,7 @@ namespace ExcelSample
             var filePath = Path.Combine(currentDir, @"../../../../../resources/Excel.xlsx");
             var data = MyExcelDataFactory.Load(filePath);
             foreach (var item in data)
-                Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Value:C2}\t\t{item.BirthDate:yyyy-MM-dd}");
+                Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Value:C2}\t\t{item.BirthDate:yyyy-MM-dd}\t\t{item.NovaPropriedade}");
         }
 
         private static void LoadExcelWithClosedXml()

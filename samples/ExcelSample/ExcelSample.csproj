@@ -30,7 +30,7 @@
 
     <!-- NuGet package reference -->
     <!--<ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders" Version="1.0.0" />
+        <PackageReference Include="Maestria.TypeProviders" Version="1.0.1" />
     </ItemGroup>-->
 
 </Project>
