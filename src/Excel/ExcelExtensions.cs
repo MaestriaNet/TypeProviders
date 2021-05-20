@@ -6,10 +6,8 @@ namespace Maestria.TypeProviders.Excel
 {
     public static class ExcelExtensions
     {
-        public static int ColumnUsedCount(this IXLWorksheet sheet)
-        {
-            return sheet.LastColumnUsed().ColumnNumber();
-        }
+        public static int ColumnUsedCount(this IXLWorksheet sheet) => sheet.LastColumnUsed().ColumnNumber();
+        public static int RowUsedCount(this IXLWorksheet sheet) => sheet.LastRowUsed().RowNumber();
 
         public static int ColumnByName(this IXLWorksheet sheet, string columnName)
         {
