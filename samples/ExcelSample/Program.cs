@@ -42,7 +42,8 @@ namespace ExcelSample
             using var workbook = new XLWorkbook(filePath);
             var sheet = workbook.Worksheet(1);
 
-            Console.WriteLine("ColumnUsedCount: " + sheet.ColumnUsedCount());
+            Console.WriteLine("ColumnUsedCount: " + sheet.LastColumnUsed().ColumnNumber());
+            Console.WriteLine("RowUsedCount: " + sheet.LastRowUsed().RowNumber());
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
             {
                 var headerCell = sheet.Row(1).Cell(i);
@@ -50,11 +51,11 @@ namespace ExcelSample
                 Console.WriteLine($"Column {i}: {headerCell.Value} = {valueCell.DataType} | {GetFieldDataType(sheet, i)}");
             }
 
-            foreach (var row in sheet.Rows(2, sheet.Rows().Count()))
+            foreach (var row in sheet.Rows(2, sheet.RowsUsed().Count()))
             {
                 var id = row.Cell(sheet.ColumnByName("Id")).Value.ToInt32Safe();
                 var name = row.Cell(sheet.ColumnByName("Name")).Value.ToStringSafe();
-                var valor = row.Cell(sheet.ColumnByName("Valor")).Value.ToDecimalSafe();
+                var valor = row.Cell(sheet.ColumnByName("Value")).Value.ToDecimalSafe();
                 Console.WriteLine($"{id}\t| {name}\t| {valor?.ToString("C2")}");
             }
         }

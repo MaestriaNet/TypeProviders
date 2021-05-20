@@ -3,8 +3,8 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
-        <!--<CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated</CompilerGeneratedFilesOutputPath>
-        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
+        <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated</CompilerGeneratedFilesOutputPath>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
 
     <Target Name="ExcludeGenerated" BeforeTargets="AssignTargetPaths">
@@ -24,13 +24,13 @@
     </ItemGroup>
 
     <!-- Project reference to debug -->
-    <ItemGroup>
+    <!--<ItemGroup>
       <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>
+    </ItemGroup>-->
 
     <!-- NuGet package reference -->
-    <!--<ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders" Version="1.0.2" />
-    </ItemGroup>-->
+    <ItemGroup>
+        <PackageReference Include="Maestria.TypeProviders" Version="1.0.4" />
+    </ItemGroup>
 
 </Project>

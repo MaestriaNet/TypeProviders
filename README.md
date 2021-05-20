@@ -59,7 +59,7 @@ dotnet add package ClosedXML
 ```
 
 ```csharp
-[ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
+[ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
 public partial class MyExcelData
 {
 }
