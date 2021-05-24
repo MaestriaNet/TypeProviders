@@ -24,13 +24,13 @@
     </ItemGroup>
 
     <!-- Project reference to debug -->
-    <!--<ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>-->
+    </ItemGroup>
 
     <!-- NuGet package reference -->
-    <ItemGroup>
+    <!--<ItemGroup>
         <PackageReference Include="Maestria.TypeProviders" Version="1.0.4" />
-    </ItemGroup>
+    </ItemGroup>-->
 
 </Project>
