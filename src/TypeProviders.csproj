@@ -45,6 +45,7 @@
     <ItemGroup>
       <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
       <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
+      <EmbeddedResource Include="OpenApi\OpenApiProviderAttribute.cs" />
     </ItemGroup>
 
     <Target Name="GetDependencyTargetPaths">
