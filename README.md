@@ -20,7 +20,7 @@ First, install [Maestria Type Providers](https://www.nuget.org/packages/Maestria
 dotnet add package Maestria.TypeProviders
 ```
 
-And configure at `.csproj` file to emit generated files on hard disk:
+If you are using VSCode, to view the automatically generated codes it is necessary to indicate to write it to disk with the configuration in the .`csproj` file:
 
 ```xml
 <!-- Enable source disk file write to correct IDE's works -->
