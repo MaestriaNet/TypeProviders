@@ -6,6 +6,9 @@
 
 using System;
 
+/// <summary>
+/// Map excel file and auto generate DTO and Factory classes
+/// </summary>
 [AttributeUsage(AttributeTargets.Class)]
 public class ExcelProviderAttribute : Attribute
 {

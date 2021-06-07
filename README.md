@@ -3,6 +3,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/mvosd40vqsgrvkr0/branch/master?svg=true)](https://ci.appveyor.com/project/fabionaspolini/typeproviders/branch/master)
 [![NuGet](https://buildstats.info/nuget/Maestria.TypeProviders)](https://www.nuget.org/packages/Maestria.TypeProviders)
 [![MyGet](https://img.shields.io/myget/maestrianet/v/Maestria.TypeProviders?label=MyGet)](https://www.myget.org/feed/maestrianet/package/nuget/Maestria.TypeProviders)
+[![Apimundo](https://img.shields.io/badge/Maestria.TypeProviders%20API-Apimundo-728199.svg)](https://apimundo.com/organizations/nuget-org/nuget-feeds/public/packages/Maestria.TypeProviders/versions/latest?tab=types)
+
 
 [![Build History](https://buildstats.info/appveyor/chart/fabionaspolini/typeproviders?branch=master)](https://ci.appveyor.com/project/fabionaspolini/typeproviders/history?branch=master)
 

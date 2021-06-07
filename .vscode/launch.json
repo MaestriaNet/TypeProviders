@@ -8,7 +8,7 @@
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build-samples",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/samples/ExcelSample/bin/Debug/net5.0/ExcelSample.dll",
             "args": [],

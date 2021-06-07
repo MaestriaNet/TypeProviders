@@ -1,20 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <Authors>Fábio Monteiro Naspolini</Authors>
         <Company>Fábio Monteiro Naspolini</Company>
         <PackageId>Maestria.TypeProviders</PackageId>
         <Product>Maestria.TypeProviders</Product>
-        <RootNamespace>Maestria.TypeProviders</RootNamespace>
-        <AssemblyName>Maestria.TypeProviders</AssemblyName>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.4</Version>
+        <Version>1.0.5</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <DevelopmentDependency>true</DevelopmentDependency>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>Maestria.TypeProviders</AssemblyName>
+        <RootNamespace>Maestria.TypeProviders</RootNamespace>
+        <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
