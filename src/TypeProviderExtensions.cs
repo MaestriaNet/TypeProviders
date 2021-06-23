@@ -16,5 +16,7 @@ namespace Maestria.TypeProviders
             using var reader = new StreamReader(stream);
             return SourceText.From(reader.ReadToEnd(), Encoding.UTF8);
         }
+
+        public static bool IsGlobalNamespace(this string @namespace) => @namespace == "<global namespace>";
     }
 }

@@ -12,10 +12,7 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
             "label": "build-TypeProviders Release",
@@ -46,10 +43,7 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
             "label": "watch-samples",

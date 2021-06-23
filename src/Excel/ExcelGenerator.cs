@@ -84,6 +84,7 @@ namespace Maestria.TypeProviders.Excel
 
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
+            var isGlobalNamespace = namespaceName.IsGlobalNamespace();
             var columns = GetExcelColumns(attribute.TemplatePath);
 
              var source = new StringBuilder($@"//----------------------
@@ -101,7 +102,7 @@ using ClosedXML.Excel;
 using Maestria.FluentCast;
 using Maestria.TypeProviders.Excel;
 
-namespace {namespaceName}
+{(isGlobalNamespace ? $"namespace {namespaceName}" : string.Empty)}
 {{
     public partial class {classSymbol.Name}
     {{

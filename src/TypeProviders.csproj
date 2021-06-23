@@ -5,12 +5,13 @@
         <Company>Fábio Monteiro Naspolini</Company>
         <PackageId>Maestria.TypeProviders</PackageId>
         <Product>Maestria.TypeProviders</Product>
-        <Version>1.0.5</Version>
+        <Version>1.0.6</Version>
         <NuspecFile>Generators.nuspec</NuspecFile>
         <LangVersion>9.0</LangVersion>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <DevelopmentDependency>true</DevelopmentDependency>
+        <NoWarn>CS1591</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>

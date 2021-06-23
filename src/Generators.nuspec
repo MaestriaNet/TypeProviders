@@ -15,7 +15,7 @@
             <group>
                 <dependency id="ClosedXML" version="0.95.4" />
                 <dependency id="DocumentFormat.OpenXml" version="2.7.2" />
-                <dependency id="Maestria.FluentCast" version="1.0.5" />
+                <dependency id="Maestria.FluentCast" version="1.0.6" />
                 <dependency id="System.Drawing.Common" version="4.5.0" />
                 <dependency id="System.IO.Packaging" version="4.0.0" />
                 <dependency id="Maestria.TypeProviders.Core" version="0.0.12" />
