@@ -7,6 +7,12 @@ using ClosedXML.Excel;
 using Maestria.FluentCast;
 using Maestria.TypeProviders.Excel;
 
+[ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
+public partial class MyExcelDataGlobalNamespace
+{
+}
+
+
 namespace ExcelSample
 {
     [ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]

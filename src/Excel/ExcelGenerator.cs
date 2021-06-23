@@ -102,8 +102,8 @@ using ClosedXML.Excel;
 using Maestria.FluentCast;
 using Maestria.TypeProviders.Excel;
 
-{(isGlobalNamespace ? $"namespace {namespaceName}" : string.Empty)}
-{{
+{(isGlobalNamespace ? string.Empty : $"namespace {namespaceName}")}
+{(isGlobalNamespace ? string.Empty : "{")}
     public partial class {classSymbol.Name}
     {{
 ");
@@ -152,7 +152,7 @@ using Maestria.TypeProviders.Excel;
             return result;
         }}
     }}
-}}");
+{(isGlobalNamespace ? string.Empty : "}")}");
              return source.ToString();
         }
 
