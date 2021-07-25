@@ -46,6 +46,20 @@
             "group": "build"
         },
         {
+            "label": "rebuild-samples",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "--no-incremental",
+                "${workspaceFolder}/samples/ExcelSample/ExcelSample.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
             "label": "watch-samples",
             "command": "dotnet",
             "type": "process",
