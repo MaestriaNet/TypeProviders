@@ -12,7 +12,6 @@ public partial class MyExcelDataGlobalNamespace
 {
 }
 
-
 namespace ExcelSample
 {
     [ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
@@ -28,41 +27,63 @@ namespace ExcelSample
             Console.WriteLine();
 
             LoadExcelWithMaestria();
-            //LoadExcelWithClosedXml();
+            // LoadExcelWithClosedXml();
         }
 
         private static void LoadExcelWithMaestria()
         {
-            var currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
             Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
+            var currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             var filePath = Path.Combine(currentDir, @"../../../../../resources/Excel.xlsx");
             var data = MyExcelDataFactory.Load(filePath);
+            Console.WriteLine($"| {"Id",3} | {"Name",-10} | {"Value",10} | {"BirthDate",10} | {"Prop",5} | {"Calculated Prop",15} |");
             foreach (var item in data)
-                Console.WriteLine($"{item.Id}\t{item.Name}\t\t{item.Value:C2}\t\t{item.BirthDate:yyyy-MM-dd}\t\t{item.NovaPropriedade}");
+                Console.WriteLine($"| {item.Id,3} | {item.Name,-10} | {item.Value,10:C2} | {item.BirthDate,10:yyyy-MM-dd} | {item.Prop,5} | {item.CalculatedProp,15} |");
         }
 
         private static void LoadExcelWithClosedXml()
         {
-            const string filePath = @"..\..\..\..\..\resources\Excel.xlsx";
-            using var workbook = new XLWorkbook(filePath);
-            var sheet = workbook.Worksheet(1);
+            Console.WriteLine("Excel.xlsx ClosedXML load");
+            var currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var filePath = Path.Combine(currentDir, @"../../../../../resources/Excel.xlsx");
 
-            Console.WriteLine("ColumnUsedCount: " + sheet.LastColumnUsed().ColumnNumber());
-            Console.WriteLine("RowUsedCount: " + sheet.LastRowUsed().RowNumber());
-            for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
+            FileStream file;
+            try
             {
-                var headerCell = sheet.Row(1).Cell(i);
-                var valueCell = sheet.Row(2).Cell(i);
-                Console.WriteLine($"Column {i}: {headerCell.Value} = {valueCell.DataType} | {GetFieldDataType(sheet, i)}");
+                file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             }
-
-            foreach (var row in sheet.Rows(2, sheet.RowsUsed().Count()))
+            catch
             {
-                var id = row.Cell(sheet.ColumnByName("Id")).Value.ToInt32Safe();
-                var name = row.Cell(sheet.ColumnByName("Name")).Value.ToStringSafe();
-                var valor = row.Cell(sheet.ColumnByName("Value")).Value.ToDecimalSafe();
-                Console.WriteLine($"{id}\t| {name}\t| {valor?.ToString("C2")}");
+                // Necessárias mais permissões de acesso ao arquivo já em uso pelo sistema operacional
+                file = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            }
+            using var workbook = new XLWorkbook(file);
+            try
+            {
+                var sheet = workbook.Worksheet(1);
+
+                Console.WriteLine("ColumnUsedCount: " + sheet.LastColumnUsed().ColumnNumber());
+                Console.WriteLine("RowUsedCount: " + sheet.LastRowUsed().RowNumber());
+                for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
+                {
+                    var headerCell = sheet.Row(1).Cell(i);
+                    var valueCell = sheet.Row(2).Cell(i);
+                    Console.WriteLine($"Column {i}: {headerCell.Value} = {valueCell.DataType} | {GetFieldDataType(sheet, i)}");
+                }
+
+                foreach (var row in sheet.Rows(2, sheet.RowsUsed().Count()))
+                {
+                    var id = row.Cell(sheet.ColumnByName("Id")).Value.ToInt32Safe();
+                    var name = row.Cell(sheet.ColumnByName("Name")).Value.ToStringSafe();
+                    var valor = row.Cell(sheet.ColumnByName("Value")).Value.ToDecimalSafe();
+                    var prop = row.Cell(sheet.ColumnByName("Prop")).Value.ToInt32();
+                    var calculatedProp = row.Cell(sheet.ColumnByName("Calculated Prop")).Value.ToInt32();
+                    Console.WriteLine($"| {id,3} | {name,-10} | {valor,10:C2} | {prop,5} | {calculatedProp,5} |");
+                }
+            }
+            finally
+            {
+                file.Dispose();
             }
         }
 

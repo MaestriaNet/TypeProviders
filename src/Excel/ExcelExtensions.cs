@@ -5,6 +5,7 @@
 //----------------------
 
 using System;
+using System.IO;
 using ClosedXML.Excel;
 
 namespace Maestria.TypeProviders.Excel
@@ -21,6 +22,19 @@ namespace Maestria.TypeProviders.Excel
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)
                 if (sheet.Row(1).Cell(i).Value.ToString()?.ToUpper() == columnName.ToUpper()) return i;
             return 0;
+        }
+
+        public static FileStream OpenFile(string filePath)
+        {
+            try
+            {
+                return new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            }
+            catch
+            {
+                // Need more access permissions to the file already in use by the operating system
+                return new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            }
         }
     }
 }

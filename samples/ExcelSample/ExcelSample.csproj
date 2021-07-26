@@ -3,17 +3,9 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
-        <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated</CompilerGeneratedFilesOutputPath>
+        <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../generated</CompilerGeneratedFilesOutputPath>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
-
-    <Target Name="ExcludeGenerated" BeforeTargets="AssignTargetPaths">
-        <ItemGroup>
-            <Generated Include="generated/**/*.cs" />
-            <Compile Remove="@(Generated)" />
-        </ItemGroup>
-        <Delete Files="@(Generated)" />
-    </Target>
 
     <ItemGroup>
       <PackageReference Include="ClosedXML" Version="0.95.4" />
