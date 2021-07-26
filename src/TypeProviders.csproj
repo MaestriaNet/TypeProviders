@@ -34,7 +34,7 @@
     <ItemGroup>
         <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Maestria.FluentCast" Pack="false" Version="1.0.5" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Maestria.FluentCast" Pack="false" Version="1.0.8" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
     </ItemGroup>

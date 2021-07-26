@@ -31,6 +31,20 @@
             "group": "build"
         },
         {
+            "label": "rebuild-TypeProviders",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "--no-incremental",
+                "${workspaceFolder}/src/TypeProviders.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
             "label": "build-TypeProviders Release",
             "command": "dotnet",
             "type": "process",

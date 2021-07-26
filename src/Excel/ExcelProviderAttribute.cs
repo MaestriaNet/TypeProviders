@@ -15,7 +15,13 @@ public class ExcelProviderAttribute : Attribute
     public const string TypeFullName = "ExcelProviderAttribute";
 
     /// <summary>
-    /// File path to load Excel template and generate source code. Default location is source code of attribute analyze and suporte relative path with format "..\..\folder\file.xlsx"
+    ///     <para>
+    ///         File path to load Excel template and generate source code.
+    ///     </para>
+    ///     <para>
+    ///         It's supported relative path with format "..\..\folder\file.xlsx".
+    ///         The relative path is based at the source code file location.
+    ///     </para>
     /// </summary>
     public string TemplatePath { get; set; }
 }

@@ -61,6 +61,7 @@ dotnet add package ClosedXML
 ```
 
 ```csharp
+// The relative path is based at the source code file location.
 [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
 public partial class MyExcelData
 {
@@ -68,7 +69,7 @@ public partial class MyExcelData
 
 var data = MyExcelDataFactory.Load(filePath);
 foreach (var item in data)
-  // Access strong typing by "data.<field-name>"
+  // Access strong typing by "item.<field-name>"
 ```
 
 [![buy-me-a-coffee](resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)

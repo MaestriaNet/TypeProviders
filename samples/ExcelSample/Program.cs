@@ -7,14 +7,14 @@ using ClosedXML.Excel;
 using Maestria.FluentCast;
 using Maestria.TypeProviders.Excel;
 
-[ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
+[ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
 public partial class MyExcelDataGlobalNamespace
 {
 }
 
 namespace ExcelSample
 {
-    [ExcelProviderAttribute(TemplatePath = @"../../resources/Excel.xlsx")]
+    [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
     public partial class MyExcelData
     {
     }
@@ -26,26 +26,25 @@ namespace ExcelSample
             Console.WriteLine("Maestria Type Provider Sample");
             Console.WriteLine();
 
-            LoadExcelWithMaestria();
-            // LoadExcelWithClosedXml();
-        }
-
-        private static void LoadExcelWithMaestria()
-        {
-            Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
             var currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             var filePath = Path.Combine(currentDir, @"../../../../../resources/Excel.xlsx");
-            var data = MyExcelDataFactory.Load(filePath);
+
+            LoadExcelWithMaestria(filePath);
+            //LoadExcelWithClosedXml(filePath);
+        }
+
+        private static void LoadExcelWithMaestria(string filePath)
+        {
+            Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
+            var data = MyExcelDataFactory.Load(filePath, 1);
             Console.WriteLine($"| {"Id",3} | {"Name",-10} | {"Value",10} | {"BirthDate",10} | {"Prop",5} | {"Calculated Prop",15} |");
             foreach (var item in data)
                 Console.WriteLine($"| {item.Id,3} | {item.Name,-10} | {item.Value,10:C2} | {item.BirthDate,10:yyyy-MM-dd} | {item.Prop,5} | {item.CalculatedProp,15} |");
         }
 
-        private static void LoadExcelWithClosedXml()
+        private static void LoadExcelWithClosedXml(string filePath)
         {
             Console.WriteLine("Excel.xlsx ClosedXML load");
-            var currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            var filePath = Path.Combine(currentDir, @"../../../../../resources/Excel.xlsx");
 
             FileStream file;
             try
