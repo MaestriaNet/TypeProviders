@@ -9,7 +9,6 @@ using ClosedXML.Excel;
 using Maestria.Extensions;
 using Maestria.FluentCast;
 using Maestria.TypeProviders.Common;
-using Maestria.TypeProviders.DTO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;

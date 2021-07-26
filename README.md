@@ -27,10 +27,12 @@ dotnet add package Maestria.TypeProviders
 This package does not include dependencies references when installed on your project, its only generate source code files.  
 You need install thirds dependencies to compile your project according to the features used, bellow instructions of source generator providers:
 
+- [ExcelProvider](#excelprovider): Generated strong data sctruct and factory class to load xls/xlsx data.
+- [OpenApiProvider](#openapiprovider): Generate HTTP client from OpenApi / Swagger specification.
+
 ## ExcelProvider
 
 Generate strong data struct and class factory to load excel data from xls/xlsx template.  
-
 
 **Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)**
 
@@ -76,8 +78,23 @@ foreach (var item in data)
   // Access strong typing by "item.<field-name>"
 ```
 
-**Good practice:** Don't use big file by template, this file is used always you need recreated source code. Big file impact is slow build time.  
-If need create a nullable field, seed excel template file with one row cell empty, and another not empty.
+**Generator engine:**
+
+- `Nullable types`: To create a nullable property, seed excel template file with one row cell empty, and another not empty.
+- `Decimal types`: To create decimal property, seed one row of cell with floating point value.
+
+**Good practices:** Don't use big file by template, this file is used always you need recreated source code. Big file impact is slow build time.  
+
+----
+
+## OpenApiProvider
+
+Provider to generate source code HTTP client from OpenApi / Swagger specification.
+
+It's planned used [NSwagStudio](https://github.com/RicoSuter/NSwag) engine with .NET 5 source generator.  
+[This package](https://github.com/RicoSuter/NSwag/wiki/CSharpClientGenerator) allows automatized generation code.
+
+...As soon as possible
 
 ----
 

@@ -1,4 +1,4 @@
-﻿namespace Maestria.TypeProviders.DTO
+﻿namespace Maestria.TypeProviders.Common
 {
     public class FieldMapInfo
     {
