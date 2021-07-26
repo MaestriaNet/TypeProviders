@@ -6,8 +6,8 @@ before_build:
   - ps: dotnet restore src\TypeProviders.csproj
 build_script:
   - ps: dotnet build src\TypeProviders.csproj --configuration Release
-#test_script:
-#  - ps: dotnet test --test-adapter-path:. --logger:Appveyor
+test_script:
+ - ps: dotnet test --test-adapter-path:. --logger:Appveyor
 artifacts:
   - path: src\bin\Release\*.nupkg
     name: Nuget Package
