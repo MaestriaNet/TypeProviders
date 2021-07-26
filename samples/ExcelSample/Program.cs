@@ -7,6 +7,7 @@ using ClosedXML.Excel;
 using Maestria.FluentCast;
 using Maestria.TypeProviders.Excel;
 
+// Top level statement support
 [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
 public partial class MyExcelDataGlobalNamespace
 {
@@ -14,8 +15,15 @@ public partial class MyExcelDataGlobalNamespace
 
 namespace ExcelSample
 {
+    // Default is used sheet 1
     [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
     public partial class MyExcelData
+    {
+    }
+
+    // Its possible set "SheetName" or "SheePosition" to load data struct of another page
+    [ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx", SheetName = "Plan2")]
+    public partial class MyExcelDataSheet2
     {
     }
 
@@ -36,10 +44,22 @@ namespace ExcelSample
         private static void LoadExcelWithMaestria(string filePath)
         {
             Console.WriteLine("Excel.xlsx Maestria TypeProvider load");
-            var data = MyExcelDataFactory.Load(filePath, 1);
+
+            // Load first page
+            var sheet1 = MyExcelDataFactory.Load(filePath);
+            Console.WriteLine("Sheet1");
             Console.WriteLine($"| {"Id",3} | {"Name",-10} | {"Value",10} | {"BirthDate",10} | {"Prop",5} | {"Calculated Prop",15} |");
-            foreach (var item in data)
+            foreach (var item in sheet1)
                 Console.WriteLine($"| {item.Id,3} | {item.Name,-10} | {item.Value,10:C2} | {item.BirthDate,10:yyyy-MM-dd} | {item.Prop,5} | {item.CalculatedProp,15} |");
+
+            Console.WriteLine(new string('-', 100));
+
+            // Load second page
+            var sheet2 = MyExcelDataSheet2Factory.Load(filePath, "Plan2");
+            Console.WriteLine("Sheet1");
+            Console.WriteLine($"| {"Id",3} | {"Name",-10} | {"Value",10} | {"BirthDate",10} | {"Prop",5} | {"Calculated Prop",15} | {"Prop Sheet 2",12} |");
+            foreach (var item in sheet2)
+                Console.WriteLine($"| {item.Id,3} | {item.Name,-10} | {item.Value,10:C2} | {item.BirthDate,10:yyyy-MM-dd} | {item.Prop,5} | {item.CalculatedProp,15} | {item.PropSheet2,15} |");
         }
 
         private static void LoadExcelWithClosedXml(string filePath)

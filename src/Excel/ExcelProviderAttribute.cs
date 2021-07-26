@@ -24,4 +24,14 @@ public class ExcelProviderAttribute : Attribute
     ///     </para>
     /// </summary>
     public string TemplatePath { get; set; }
+
+    /// <summary>
+    /// Sheet position to build classes. Stated from 1.
+    /// </summary>
+    public int SheetPosition { get; set; } = 1;
+
+    /// <summary>
+    /// Sheet name to build classes.
+    /// </summary>
+    public string SheetName { get; set; }
 }

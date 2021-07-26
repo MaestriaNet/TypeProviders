@@ -22,7 +22,83 @@ First, install [Maestria Type Providers](https://www.nuget.org/packages/Maestria
 dotnet add package Maestria.TypeProviders
 ```
 
-If you are using VSCode, to view the automatically generated codes it is necessary to indicate to write it to disk with the configuration in the .`csproj` file:
+## Providers x Dependencies
+
+This package does not include dependencies references when installed on your project, its only generate source code files.  
+You need install thirds dependencies to compile your project according to the features used, bellow instructions of source generator providers:
+
+## ExcelProvider
+
+Generate strong data struct and class factory to load excel data from xls/xlsx template.  
+
+
+**Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)**
+
+**Dependencies**
+- [Maestria.FluentCast](https://github.com/MaestriaNet/FluentCast)
+- [ClosedXML](https://github.com/ClosedXML/ClosedXML)
+
+**Dependencies install**
+
+```bash
+dotnet add package Maestria.FluentCast
+dotnet add package ClosedXML
+```
+**[Source code sample](samples/ExcelSample/Program.cs#L12)**
+
+**Use case sample**
+
+```csharp
+// The relative path is based at the source code file location.
+// In this example the first page was used as none were explicitly entered.
+[ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
+public partial class MyExcelData
+{
+}
+
+var data = MyExcelDataFactory.Load(filePath);
+foreach (var item in data)
+  // Access strong typing by "item.<field-name>"
+```
+
+**Use case sample two**
+
+```csharp
+// The relative path is based at the source code file location.
+// Loadind data struct from second page
+[ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx", SheetName = "Plan2")]
+public partial class MyExcelData
+{
+}
+
+var data = MyExcelDataFactory.Load(filePath, "Plan2");
+foreach (var item in data)
+  // Access strong typing by "item.<field-name>"
+```
+
+**Good practice:** Don't use big file by template, this file is used always you need recreated source code. Big file impact is slow build time.  
+If need create a nullable field, seed excel template file with one row cell empty, and another not empty.
+
+----
+
+## Troubleshooting
+
+**Optional configuration in VS Code:** To view the automatically generated codes it is necessary to indicate to write it to disk with the configuration in the .`csproj` file.  
+On `CompilerGeneratedFilesOutputPath` property its configured with `/../generated/`. This folder if one level above of file project on this sample.  
+This mode allow see generated files, but not works `go to navigation` feature of VS Code.
+
+```xml
+<!-- Enable source disk file write to correct IDE's works -->
+<PropertyGroup>
+    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../generated</CompilerGeneratedFilesOutputPath>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+</PropertyGroup>
+```
+
+**Optional configuration in VS Code:** To allow `go to navigation` feature you need write files at solution level.  
+> Problem's: The source code generated will be used on next build, to solve problems of duplicated classes,
+it's need removed generated files before build.  
+On next build, if there was no change on yout source code used by generators, the files has no generated. You need force a rebuild with `dotnet build --no-incremental <args>` to regenerate files.
 
 ```xml
 <!-- Enable source disk file write to correct IDE's works -->
@@ -34,43 +110,16 @@ If you are using VSCode, to view the automatically generated codes it is necessa
 <!-- Remove files on build start to solve recreate bug message "alwaready exists" -->
 <Target Name="ExcludeGenerated" BeforeTargets="AssignTargetPaths">
     <ItemGroup>
-        <Generated Include="generated/**/*.cs" />
+        <Generated Include="/generated/**/*.cs" />
         <Compile Remove="@(Generated)" />
     </ItemGroup>
     <Delete Files="@(Generated)" />
 </Target>
 ```
 
-[Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L7)
+[Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L6)
 
-## Providers x Dependencies
-
-This package does not include dependencies on build output or project, you need another install dependencies to generated source code use on you project, bellow instructions:
-
-### Excel
-
-Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)
-
-- [Maestria.FluentCast](https://github.com/MaestriaNet/FluentCast)
-- [ClosedXML](https://github.com/ClosedXML/ClosedXML)
-- [Source Code use sample](samples/ExcelSample/Program.cs#L12)
-
-```bash
-dotnet add package Maestria.FluentCast
-dotnet add package ClosedXML
-```
-
-```csharp
-// The relative path is based at the source code file location.
-[ExcelProvider(TemplatePath = @"../../resources/Excel.xlsx")]
-public partial class MyExcelData
-{
-}
-
-var data = MyExcelDataFactory.Load(filePath);
-foreach (var item in data)
-  // Access strong typing by "item.<field-name>"
-```
+----
 
 [![buy-me-a-coffee](resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
 [![smile.png](resources/smile.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
