@@ -12,18 +12,15 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
-            "label": "build-TypeProviders",
+            "label": "build-solution",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/TypeProviders.csproj",
+                "${workspaceFolder}/TypeProviders.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -31,18 +28,32 @@
             "group": "build"
         },
         {
-            "label": "rebuild-TypeProviders",
+            "label": "rebuild-solution",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "--no-incremental",
-                "${workspaceFolder}/src/TypeProviders.csproj",
+                "${workspaceFolder}/TypeProviders.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile",
             "group": "build"
+        },
+        {
+            "label": "test-solution",
+            "command": "cmd",
+            "type": "process",
+            "args": [
+                "/c",
+                "test.bat"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "label": "build-TypeProviders Release",
