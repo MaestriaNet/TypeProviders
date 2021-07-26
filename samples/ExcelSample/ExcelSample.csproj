@@ -3,7 +3,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
-        <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../generated</CompilerGeneratedFilesOutputPath>
+        <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../../generated/samples</CompilerGeneratedFilesOutputPath>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
 
