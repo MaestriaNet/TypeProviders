@@ -55,7 +55,7 @@ using Maestria.TypeProviders.Excel;
 ");
             var lastColumn = _opts.Fields.Last();
             _opts.Fields.Iterate(x =>
-                source.Append($"        {x.GetSourceCode()}{(lastColumn == x ? "" : "\r\n")}"));
+                source.Append($"        {x.GetSourceCodeToProperty()}{(lastColumn == x ? "" : "\r\n")}"));
 
             source.Append(
 @$"    }}
