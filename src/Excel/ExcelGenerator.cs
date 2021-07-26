@@ -27,7 +27,7 @@ namespace Maestria.TypeProviders.Excel
             context.RegisterForSyntaxNotifications(() => new ExcelContextReceiver());
             context.RegisterForPostInitialization(ctx =>
                 ctx.AddSource("ExcelProviderAttribute.cs",
-                    GeneratorExtensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs")));
+                    Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs")));
         }
 
         public void Execute(GeneratorExecutionContext context)
@@ -38,7 +38,8 @@ namespace Maestria.TypeProviders.Excel
             var classSymbols = GetCandidateClassSymbols(context, receiver);
 
             if (classSymbols.Any())
-                context.AddSource("ExcelExtensions.cs", GeneratorExtensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
+                context.AddSource("ExcelExtensions.cs",
+                    Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
 
             foreach (var classSymbol in classSymbols)
             {

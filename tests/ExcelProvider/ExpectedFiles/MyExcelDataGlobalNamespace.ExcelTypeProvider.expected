@@ -55,14 +55,20 @@ using Maestria.TypeProviders.Excel;
         {
             var result = new List<MyExcelDataGlobalNamespace>();
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
+            var indexOfId = sheet.ColumnByName("Id");
+            var indexOfName = sheet.ColumnByName("Name");
+            var indexOfValue = sheet.ColumnByName("Value");
+            var indexOfBirthDate = sheet.ColumnByName("Birth Date");
+            var indexOfProp = sheet.ColumnByName("Prop");
+            var indexOfCalculatedProp = sheet.ColumnByName("Calculated Prop");
             foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {
-                var idValue = row.Cell(sheet.ColumnByName("Id")).Value;
-                var nameValue = row.Cell(sheet.ColumnByName("Name")).Value;
-                var valueValue = row.Cell(sheet.ColumnByName("Value")).Value;
-                var birthDateValue = row.Cell(sheet.ColumnByName("Birth Date")).Value;
-                var propValue = row.Cell(sheet.ColumnByName("Prop")).Value;
-                var calculatedPropValue = row.Cell(sheet.ColumnByName("Calculated Prop")).Value;
+                var idValue = row.Cell(indexOfId).Value;
+                var nameValue = row.Cell(indexOfName).Value;
+                var valueValue = row.Cell(indexOfValue).Value;
+                var birthDateValue = row.Cell(indexOfBirthDate).Value;
+                var propValue = row.Cell(indexOfProp).Value;
+                var calculatedPropValue = row.Cell(indexOfCalculatedProp).Value;
                 result.Add(new MyExcelDataGlobalNamespace
                 {
                     Id = idValue.ToInt32(),

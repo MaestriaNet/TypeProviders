@@ -56,15 +56,22 @@ namespace Maestria.TypeProviders.Test.ExcelProvider
         {
             var result = new List<MyExcelDataSheet2>();
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
+            var indexOfId = sheet.ColumnByName("Id");
+            var indexOfName = sheet.ColumnByName("Name");
+            var indexOfValue = sheet.ColumnByName("Value");
+            var indexOfBirthDate = sheet.ColumnByName("Birth Date");
+            var indexOfProp = sheet.ColumnByName("Prop");
+            var indexOfCalculatedProp = sheet.ColumnByName("Calculated Prop");
+            var indexOfPropSheet2 = sheet.ColumnByName("Prop Sheet 2");
             foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {
-                var idValue = row.Cell(sheet.ColumnByName("Id")).Value;
-                var nameValue = row.Cell(sheet.ColumnByName("Name")).Value;
-                var valueValue = row.Cell(sheet.ColumnByName("Value")).Value;
-                var birthDateValue = row.Cell(sheet.ColumnByName("Birth Date")).Value;
-                var propValue = row.Cell(sheet.ColumnByName("Prop")).Value;
-                var calculatedPropValue = row.Cell(sheet.ColumnByName("Calculated Prop")).Value;
-                var propSheet2Value = row.Cell(sheet.ColumnByName("Prop Sheet 2")).Value;
+                var idValue = row.Cell(indexOfId).Value;
+                var nameValue = row.Cell(indexOfName).Value;
+                var valueValue = row.Cell(indexOfValue).Value;
+                var birthDateValue = row.Cell(indexOfBirthDate).Value;
+                var propValue = row.Cell(indexOfProp).Value;
+                var calculatedPropValue = row.Cell(indexOfCalculatedProp).Value;
+                var propSheet2Value = row.Cell(indexOfPropSheet2).Value;
                 result.Add(new MyExcelDataSheet2
                 {
                     Id = idValue.ToInt32(),

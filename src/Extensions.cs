@@ -1,13 +1,15 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Maestria.TypeProviders
 {
-    public static class GeneratorExtensions
+    public static class Extensions
     {
-        public static string ToCamelCase(this string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
+        public static string WithFirstCharLower(this string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
 
         public static SourceText GetEmbeddedSourceCode(string resourceName)
         {
@@ -18,5 +20,9 @@ namespace Maestria.TypeProviders
         }
 
         public static bool IsGlobalNamespace(this string @namespace) => @namespace == "<global namespace>";
+
+        public static bool HasAttribute(this ISymbol symbol, string typeFullName) => symbol
+            .GetAttributes()
+            .Any(x => x.AttributeClass?.ToDisplayString() == typeFullName);
     }
 }

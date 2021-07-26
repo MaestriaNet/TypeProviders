@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Maestria.Extensions;
 using Maestria.TypeProviders.Common;
 
 namespace Maestria.TypeProviders.Excel
@@ -53,8 +54,8 @@ using Maestria.TypeProviders.Excel;
     {{
 ");
             var lastColumn = _opts.Fields.Last();
-            foreach (var column in _opts.Fields)
-                source.Append($"        {column.GetSourceCode()}{(lastColumn == column ? "" : "\r\n")}");
+            _opts.Fields.Iterate(x =>
+                source.Append($"        {x.GetSourceCode()}{(lastColumn == x ? "" : "\r\n")}"));
 
             source.Append(
 @$"    }}
@@ -89,21 +90,22 @@ using Maestria.TypeProviders.Excel;
         {{
             var result = new List<{_opts.ClassName}>();
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
-            foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
+");
+            _opts.Fields.Iterate(x =>
+                source.Append($"            var indexOf{x.PropertyName} = sheet.ColumnByName(\"{x.SourceName}\");\r\n"));
+
+            source.Append(@$"            foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {{
 ");
-            foreach (var column in _opts.Fields)
-            {
-                source.Append($"                var {column.PropertyName.ToCamelCase()}Value = row.Cell(sheet.ColumnByName(\"{column.SourceName}\")).Value;\r\n");
-            }
+            _opts.Fields.Iterate(x =>
+                source.Append($"                var {x.PropertyName.WithFirstCharLower()}Value = row.Cell(indexOf{x.PropertyName}).Value;\r\n"));
 
             source.Append(@$"                result.Add(new {_opts.ClassName}
                 {{
 ");
-            foreach (var column in _opts.Fields)
-            {
-                source.Append($"                    {column.PropertyName} = {column.GetCastSourceCode(column.PropertyName.ToCamelCase() + "Value")},\r\n");
-            }
+            _opts.Fields.Iterate(x =>
+                source.Append($"                    {x.PropertyName} = {x.GetCastSourceCode(x.PropertyName.WithFirstCharLower() + "Value")},\r\n"));
+
             source.Append("                });\r\n");
 
             source.Append(@$"            }}
