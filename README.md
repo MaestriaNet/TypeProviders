@@ -101,13 +101,13 @@ It's planned used [NSwagStudio](https://github.com/RicoSuter/NSwag) engine with 
 ## Troubleshooting
 
 **Optional configuration in VS Code:** To view the automatically generated codes it is necessary to indicate to write it to disk with the configuration in the .`csproj` file.  
-On `CompilerGeneratedFilesOutputPath` property its configured with `/../generated/`. This folder if one level above of file project on this sample.  
+On `CompilerGeneratedFilesOutputPath` property its configured with `/../generated/$(MSBuildProjectName)`. This folder is one level above of file project on this sample.  
 This mode allow see generated files, but not works `go to navigation` feature of VS Code.
 
 ```xml
 <!-- Enable source disk file write to correct IDE's works -->
 <PropertyGroup>
-    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../generated</CompilerGeneratedFilesOutputPath>
+    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../generated/$(MSBuildProjectName)</CompilerGeneratedFilesOutputPath>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 </PropertyGroup>
 ```
@@ -120,7 +120,7 @@ On next build, if there was no change on yout source code used by generators, th
 ```xml
 <!-- Enable source disk file write to correct IDE's works -->
 <PropertyGroup>
-    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated</CompilerGeneratedFilesOutputPath>
+    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/generated/$(MSBuildProjectName)</CompilerGeneratedFilesOutputPath>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 </PropertyGroup>
 
