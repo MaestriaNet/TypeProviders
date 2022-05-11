@@ -18,6 +18,7 @@ namespace Maestria.TypeProviders.Excel
     [Generator]
     public class ExcelGenerator : ISourceGenerator
     {
+        private static readonly char[] UpperCharsAfterWhenGenerateDotnetPropertyName = { ' ', '/', '\\', '-', '_' };
         public void Initialize(GeneratorInitializationContext context)
         {
 /*#if DEBUG
@@ -124,10 +125,30 @@ namespace Maestria.TypeProviders.Excel
                 yield return new FieldMapInfo
                 {
                     SourceName = headerCell.Value.ToString(),
-                    PropertyName = headerCell.Value.ToString().Replace(" ", ""),
+                    PropertyName = GetValidDotnetPropertyName(headerCell.Value.ToString()),
                     DataType = GetFieldDataType(sheet, i)
                 };
             }
+        }
+
+        private static string GetValidDotnetPropertyName(string columnName)
+        {
+            foreach (var findChar in UpperCharsAfterWhenGenerateDotnetPropertyName)
+            {
+                var pos = columnName.IndexOf(findChar);
+                while (pos > -1 && pos < columnName.Length - 1)
+                {
+                    var tempChar = columnName[pos + 1];
+                    columnName = columnName.Remove(pos + 1, 1).Insert(pos + 1, tempChar.ToString().ToUpperInvariant());
+                    pos = columnName.IndexOf(findChar, pos + 1);
+                }
+            }
+
+            return columnName
+                .Replace(" ", "")
+                .Replace("-", "")
+                .Replace("/", "_")
+                .Replace(@"\", "_");
         }
 
         private static string GetFieldDataType(IXLWorksheet sheet, int columnIndex)

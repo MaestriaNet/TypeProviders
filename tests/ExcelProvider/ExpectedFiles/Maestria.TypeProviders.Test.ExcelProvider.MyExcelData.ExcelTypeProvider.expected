@@ -23,6 +23,12 @@ namespace Maestria.TypeProviders.Test.ExcelProvider
         public DateTime BirthDate { get; set; }
         public int Prop { get; set; }
         public string CalculatedProp { get; set; }
+        public string PropSample { get; set; }
+        public string PropSample2 { get; set; }
+        public string Prop_Sample3 { get; set; }
+        public string Prop_Sample4 { get; set; }
+        public string Prop_Sample5 { get; set; }
+        public string Prop_Sample_AB { get; set; }
     }
 
     public static partial class MyExcelDataFactory
@@ -55,12 +61,18 @@ namespace Maestria.TypeProviders.Test.ExcelProvider
         {
             var result = new List<MyExcelData>();
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
-            var indexOfId = sheet.ColumnByName("Id");
-            var indexOfName = sheet.ColumnByName("Name");
-            var indexOfValue = sheet.ColumnByName("Value");
-            var indexOfBirthDate = sheet.ColumnByName("Birth Date");
-            var indexOfProp = sheet.ColumnByName("Prop");
-            var indexOfCalculatedProp = sheet.ColumnByName("Calculated Prop");
+            var indexOfId = sheet.ColumnByName(@"Id");
+            var indexOfName = sheet.ColumnByName(@"Name");
+            var indexOfValue = sheet.ColumnByName(@"Value");
+            var indexOfBirthDate = sheet.ColumnByName(@"Birth Date");
+            var indexOfProp = sheet.ColumnByName(@"Prop");
+            var indexOfCalculatedProp = sheet.ColumnByName(@"Calculated Prop");
+            var indexOfPropSample = sheet.ColumnByName(@"Prop sample");
+            var indexOfPropSample2 = sheet.ColumnByName(@"Prop-sample 2");
+            var indexOfProp_Sample3 = sheet.ColumnByName(@"Prop_sample 3");
+            var indexOfProp_Sample4 = sheet.ColumnByName(@"Prop\sample 4");
+            var indexOfProp_Sample5 = sheet.ColumnByName(@"Prop/sample 5");
+            var indexOfProp_Sample_AB = sheet.ColumnByName(@"Prop  \  sample  /  a   b");
             foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {
                 var idValue = row.Cell(indexOfId).Value;
@@ -69,6 +81,12 @@ namespace Maestria.TypeProviders.Test.ExcelProvider
                 var birthDateValue = row.Cell(indexOfBirthDate).Value;
                 var propValue = row.Cell(indexOfProp).Value;
                 var calculatedPropValue = row.Cell(indexOfCalculatedProp).Value;
+                var propSampleValue = row.Cell(indexOfPropSample).Value;
+                var propSample2Value = row.Cell(indexOfPropSample2).Value;
+                var prop_Sample3Value = row.Cell(indexOfProp_Sample3).Value;
+                var prop_Sample4Value = row.Cell(indexOfProp_Sample4).Value;
+                var prop_Sample5Value = row.Cell(indexOfProp_Sample5).Value;
+                var prop_Sample_ABValue = row.Cell(indexOfProp_Sample_AB).Value;
                 result.Add(new MyExcelData
                 {
                     Id = idValue.ToInt32(),
@@ -77,6 +95,12 @@ namespace Maestria.TypeProviders.Test.ExcelProvider
                     BirthDate = birthDateValue.ToDateTime(),
                     Prop = propValue.ToInt32(),
                     CalculatedProp = calculatedPropValue.ToString(),
+                    PropSample = propSampleValue.ToString(),
+                    PropSample2 = propSample2Value.ToString(),
+                    Prop_Sample3 = prop_Sample3Value.ToString(),
+                    Prop_Sample4 = prop_Sample4Value.ToString(),
+                    Prop_Sample5 = prop_Sample5Value.ToString(),
+                    Prop_Sample_AB = prop_Sample_ABValue.ToString(),
                 });
             }
             return result;

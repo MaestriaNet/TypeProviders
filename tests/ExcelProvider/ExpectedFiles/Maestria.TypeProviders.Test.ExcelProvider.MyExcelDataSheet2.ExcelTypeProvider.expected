@@ -56,13 +56,13 @@ namespace Maestria.TypeProviders.Test.ExcelProvider
         {
             var result = new List<MyExcelDataSheet2>();
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
-            var indexOfId = sheet.ColumnByName("Id");
-            var indexOfName = sheet.ColumnByName("Name");
-            var indexOfValue = sheet.ColumnByName("Value");
-            var indexOfBirthDate = sheet.ColumnByName("Birth Date");
-            var indexOfProp = sheet.ColumnByName("Prop");
-            var indexOfCalculatedProp = sheet.ColumnByName("Calculated Prop");
-            var indexOfPropSheet2 = sheet.ColumnByName("Prop Sheet 2");
+            var indexOfId = sheet.ColumnByName(@"Id");
+            var indexOfName = sheet.ColumnByName(@"Name");
+            var indexOfValue = sheet.ColumnByName(@"Value");
+            var indexOfBirthDate = sheet.ColumnByName(@"Birth Date");
+            var indexOfProp = sheet.ColumnByName(@"Prop");
+            var indexOfCalculatedProp = sheet.ColumnByName(@"Calculated Prop");
+            var indexOfPropSheet2 = sheet.ColumnByName(@"Prop Sheet 2");
             foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {
                 var idValue = row.Cell(indexOfId).Value;

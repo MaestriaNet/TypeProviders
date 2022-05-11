@@ -92,7 +92,7 @@ using Maestria.TypeProviders.Excel;
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
 ");
             _opts.Fields.Iterate(x =>
-                source.Append($"            var indexOf{x.PropertyName} = sheet.ColumnByName(\"{x.SourceName}\");\r\n"));
+                source.Append($"            var indexOf{x.PropertyName} = sheet.ColumnByName(@\"{x.SourceName}\");\r\n"));
 
             source.Append(@$"            foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {{
