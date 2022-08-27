@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <IsPackable>false</IsPackable>
         <AssemblyName>Maestria.TypeProviders.Test</AssemblyName>
-        <RootNamespace>Maestria.TypeProviders.Test</RootNamespace>
-        <LangVersion>9</LangVersion>
         <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)/../generated/tests</CompilerGeneratedFilesOutputPath>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <IsPackable>false</IsPackable>
+        <LangVersion>9</LangVersion>
+        <RootNamespace>Maestria.TypeProviders.Test</RootNamespace>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

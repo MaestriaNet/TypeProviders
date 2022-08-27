@@ -1,6 +1,14 @@
-version: '1.0.8.{build}'
+version: '1.0.10.{build}'
 image: Visual Studio 2019
 configuration: Release
+dotnet_csproj:
+  patch: true
+  file: 'src\TypeProviders.csproj'
+  version: '1.0.10'
+  package_version: '1.0.10'
+  assembly_version: '1.0.10'
+  file_version: '1.0.10'
+  informational_version: '1.0.10'
 before_build:
   - ps: dotnet --version
   - ps: dotnet restore src\TypeProviders.csproj

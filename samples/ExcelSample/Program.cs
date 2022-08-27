@@ -48,9 +48,9 @@ namespace ExcelSample
             // Load first page
             var sheet1 = MyExcelDataFactory.Load(filePath);
             Console.WriteLine("Sheet1");
-            Console.WriteLine($"| {"Id",3} | {"Name",-10} | {"Value",10} | {"BirthDate",10} | {"Prop",5} | {"Calculated Prop",15} |");
+            Console.WriteLine($"| {"Id",3} | {"Name",-10} | {"Value",10} | {"BirthDate",10} | {"Prop",5} | {"Calculated Prop",15} | {"Prop_Sample_AB",15}");
             foreach (var item in sheet1)
-                Console.WriteLine($"| {item.Id,3} | {item.Name,-10} | {item.Value,10:C2} | {item.BirthDate,10:yyyy-MM-dd} | {item.Prop,5} | {item.CalculatedProp,15} |");
+                Console.WriteLine($"| {item.Id,3} | {item.Name,-10} | {item.Value,10:C2} | {item.BirthDate,10:yyyy-MM-dd} | {item.Prop,5} | {item.CalculatedProp,15} | {item.Prop_Sample_AB,15}");
 
             Console.WriteLine(new string('-', 100));
 

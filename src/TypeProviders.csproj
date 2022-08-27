@@ -3,21 +3,37 @@
   <PropertyGroup>
     <Authors>Fábio Monteiro Naspolini</Authors>
     <Company>Fábio Monteiro Naspolini</Company>
+    <Description>.NET Source Generator for Excel.</Description>
+    <!-- <NuspecFile>Generators.nuspec</NuspecFile> -->
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/icon.png</PackageIconUrl>
     <PackageId>Maestria.TypeProviders</PackageId>
-    <Product>Maestria.TypeProviders</Product>
-    <Version>1.0.8</Version>
-    <NuspecFile>Generators.nuspec</NuspecFile>
-    <LangVersion>9.0</LangVersion>
+    <PackageProjectUrl>https://github.com/MaestriaNet/TypeProviders</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>SourceGenerator Source Generator Excel Helper Extension Extensions Productivity Maestria Mastery C# .NET CSharp</PackageTags>
+    <Version>1.0.10</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DevelopmentDependency>true</DevelopmentDependency>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    <DevelopmentDependency>true</DevelopmentDependency>
-    <NoWarn>CS1591</NoWarn>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Maestria.TypeProviders</AssemblyName>
-    <RootNamespace>Maestria.TypeProviders</RootNamespace>
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>Maestria.TypeProviders</AssemblyName>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+    <LangVersion>9</LangVersion>
+    <NoWarn>CS1591</NoWarn>
+    <RootNamespace>Maestria.TypeProviders</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\resources\icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <!-- Embedded sources code used by the source generator and user application -->
   <ItemGroup>
@@ -33,7 +49,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
   </ItemGroup>
 
-  <!-- Dependencies needs to include in package output, but not referencing on the user application with import this library  -->
+  <!-- Dependencies needs to include in package output, but not referencing on the application runtime  -->
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
