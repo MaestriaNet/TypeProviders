@@ -1,96 +1,99 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Authors>Fábio Monteiro Naspolini</Authors>
-    <Company>Fábio Monteiro Naspolini</Company>
-    <Description>.NET Source Generator for Excel.</Description>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/icon.png</PackageIconUrl>
-    <PackageId>Maestria.TypeProviders</PackageId>
-    <PackageProjectUrl>https://github.com/MaestriaNet/TypeProviders</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>SourceGenerator Source Generator Excel Helper Extension Extensions Productivity Maestria Mastery C# .NET CSharp</PackageTags>
-    <Version>1.1.0</Version>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <DevelopmentDependency>true</DevelopmentDependency>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <AssemblyName>Maestria.TypeProviders</AssemblyName>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
-    <LangVersion>9</LangVersion>
-    <NoWarn>CS1591</NoWarn>
-    <RootNamespace>Maestria.TypeProviders</RootNamespace>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\README.md" Pack="true" PackagePath="\" />
-    <None Include="..\resources\icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
-  <!-- Embedded sources code used by the source generator and user application -->
-  <ItemGroup>
-    <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
-    <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
-    <EmbeddedResource Include="OpenApi\OpenApiProviderAttribute.cs" />
-  </ItemGroup>
-
-  <!-- Dependencies default -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
-  </ItemGroup>
-
-  <!-- Dependencies needs to include in package output, but not referencing on the application runtime  -->
-  <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="Maestria.Extensions" Version="3.2.2" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="Maestria.Extensions.FluentCast" Pack="false" Version="2.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
-  <Target Name="GetDependencyTargetPaths">
-    <ItemGroup>
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
-    </ItemGroup>
-  </Target>
-
-  <ItemGroup>
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
-  </PropertyGroup>
-
-  <!-- Nugetspec -->
-  <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>
-      <NuspecProperties>outputPath=$(OutputPath);version=$(PackageVersion);restEaseVersion=$(VersionPrefix)</NuspecProperties>
+        <Authors>Fábio Monteiro Naspolini</Authors>
+        <Company>Fábio Monteiro Naspolini</Company>
+        <Description>.NET Source Generator for Excel.</Description>
+        <License>https://github.com/MaestriaNet/TypeProviders/blob/master/LICENSE</License>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageIconUrl>https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/icon.png</PackageIconUrl>
+        <PackageId>Maestria.TypeProviders</PackageId>
+        <PackageProjectUrl>https://github.com/MaestriaNet/TypeProviders</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>SourceGenerator Source Generator Excel Helper Extension Extensions Productivity Maestria Mastery C# .NET CSharp</PackageTags>
+        <RepositoryUrl>https://github.com/MaestriaNet/TypeProviders</RepositoryUrl>
+        <Title>Maestria.TypeProviders</Title>
+        <Version>1.1.1</Version>
     </PropertyGroup>
-  </Target>
+
+    <PropertyGroup>
+        <DevelopmentDependency>true</DevelopmentDependency>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AssemblyName>Maestria.TypeProviders</AssemblyName>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+        <LangVersion>9</LangVersion>
+        <NoWarn>CS1591</NoWarn>
+        <RootNamespace>Maestria.TypeProviders</RootNamespace>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+        <None Include="..\resources\icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <!-- Embedded sources code used by the source generator and user application -->
+    <ItemGroup>
+        <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
+        <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
+        <EmbeddedResource Include="OpenApi\OpenApiProviderAttribute.cs" />
+    </ItemGroup>
+
+    <!-- Dependencies default -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
+    </ItemGroup>
+
+    <!-- Dependencies needs to include in package output, but not referencing on the application runtime  -->
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Maestria.Extensions" Version="3.2.3" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Maestria.Extensions.FluentCast" Pack="false" Version="2.0.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <Target Name="GetDependencyTargetPaths">
+        <ItemGroup>
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
+        </ItemGroup>
+    </Target>
+
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+    </PropertyGroup>
+
+    <!-- Nugetspec -->
+    <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
+        <PropertyGroup>
+            <NuspecProperties>outputPath=$(OutputPath);version=$(PackageVersion);restEaseVersion=$(VersionPrefix)</NuspecProperties>
+        </PropertyGroup>
+    </Target>
 
 </Project>

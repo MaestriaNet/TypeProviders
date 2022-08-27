@@ -14,7 +14,7 @@
         <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
         <PackageReference Include="ClosedXML" Version="0.95.4" />
         <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
-        <PackageReference Include="Maestria.Extensions" Version="3.2.2" />
+        <PackageReference Include="Maestria.Extensions" Version="3.2.3" />
         <PackageReference Include="Maestria.Extensions.FluentCast" Version="2.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
         <PackageReference Include="nunit" Version="3.12.0" />
