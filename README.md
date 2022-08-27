@@ -1,22 +1,22 @@
-# Maestria Type Providers
+# Maestria.Type.Providers
 
-[![Build status](https://ci.appveyor.com/api/projects/status/mvosd40vqsgrvkr0/branch/master?svg=true)](https://ci.appveyor.com/project/fabionaspolini/typeproviders/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/mvosd40vqsgrvkr0/branch/master?svg=true)](https://ci.appveyor.com/project/fabionaspolini/maestria-typeproviders/branch/master)
 [![NuGet](https://buildstats.info/nuget/Maestria.TypeProviders)](https://www.nuget.org/packages/Maestria.TypeProviders)
 [![MyGet](https://img.shields.io/myget/maestrianet/v/Maestria.TypeProviders?label=MyGet)](https://www.myget.org/feed/maestrianet/package/nuget/Maestria.TypeProviders)
 [![Apimundo](https://img.shields.io/badge/Maestria.TypeProviders%20API-Apimundo-728199.svg)](https://apimundo.com/organizations/nuget-org/nuget-feeds/public/packages/Maestria.TypeProviders/versions/latest?tab=types)
 
 
-[![Build History](https://buildstats.info/appveyor/chart/fabionaspolini/typeproviders?branch=master)](https://ci.appveyor.com/project/fabionaspolini/typeproviders/history?branch=master)
+[![Build History](https://buildstats.info/appveyor/chart/fabionaspolini/maestria-typeproviders?branch=master)](https://ci.appveyor.com/project/fabionaspolini/maestria-typeproviders/history?branch=master)
 
-[![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+[![donate](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/btn_donate.gif)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
 
-## What is Maestria Type Providers?
+## What is Maestria.Type.Providers?
 
 Source Generator pack to increase productivity and improve source code writing.
 
 ## How install and configure package?
 
-First, install [Maestria Type Providers](https://www.nuget.org/packages/Maestria.TypeProviders/) from the dotnet cli command line:
+First, install [Maestria.Type.Providers](https://www.nuget.org/packages/Maestria.TypeProviders/) from the dotnet cli command line:
 
 ```bash
 dotnet add package Maestria.TypeProviders
@@ -134,13 +134,13 @@ On next build, if there was no change on yout source code used by generators, th
 </Target>
 ```
 
-[Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L6)
+[Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L4)
 
 ----
 
-[![buy-me-a-coffee](resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
-[![smile.png](resources/smile.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+[![buy-me-a-coffee](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+[![smile.png](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/smile.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
 
 If my contributions helped you, please help me buy a coffee :D
 
-[![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+[![donate](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/btn_donate.gif)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
