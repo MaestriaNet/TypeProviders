@@ -45,7 +45,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using ClosedXML.Excel;
-using Maestria.FluentCast;
+using Maestria.Extensions.FluentCast;
 using Maestria.TypeProviders.Excel;
 
 {(_opts.IsGlobalNamespace ? string.Empty : $"namespace {_opts.Namespace}")}

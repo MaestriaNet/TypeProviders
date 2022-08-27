@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
-using Maestria.FluentCast;
+using Maestria.Extensions.FluentCast;
 using Maestria.TypeProviders.Excel;
 
 // Top level statement support

@@ -4,14 +4,13 @@
     <Authors>Fábio Monteiro Naspolini</Authors>
     <Company>Fábio Monteiro Naspolini</Company>
     <Description>.NET Source Generator for Excel.</Description>
-    <!-- <NuspecFile>Generators.nuspec</NuspecFile> -->
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/icon.png</PackageIconUrl>
     <PackageId>Maestria.TypeProviders</PackageId>
     <PackageProjectUrl>https://github.com/MaestriaNet/TypeProviders</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>SourceGenerator Source Generator Excel Helper Extension Extensions Productivity Maestria Mastery C# .NET CSharp</PackageTags>
-    <Version>1.0.10</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -31,8 +30,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\README.md" Pack="true" PackagePath="\"/>
-    <None Include="..\resources\icon.png" Pack="true" PackagePath="\"/>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\resources\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <!-- Embedded sources code used by the source generator and user application -->
@@ -53,8 +52,8 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="Maestria.Extensions" Version="2.1.4" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="Maestria.FluentCast" Pack="false" Version="1.0.8" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="Maestria.Extensions" Version="3.2.2" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="Maestria.Extensions.FluentCast" Pack="false" Version="2.0.0" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
@@ -63,7 +62,7 @@
     <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgMaestria_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
@@ -73,7 +72,7 @@
       <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using Maestria.Extensions;
-using Maestria.FluentCast;
+using Maestria.Extensions.FluentCast;
 using Maestria.TypeProviders.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
