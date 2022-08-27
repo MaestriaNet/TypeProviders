@@ -37,13 +37,13 @@ Generate strong data struct and class factory to load excel data from xls/xlsx t
 **Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)**
 
 **Dependencies**
-- [Maestria.FluentCast](https://github.com/MaestriaNet/FluentCast)
+- [Maestria.Extensions.FluentCast](https://github.com/MaestriaNet/Extensions.FluentCast)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 
 **Dependencies install**
 
 ```bash
-dotnet add package Maestria.FluentCast
+dotnet add package Maestria.Extensions.FluentCast
 dotnet add package ClosedXML
 ```
 **[Source code sample](samples/ExcelSample/Program.cs#L12)**

@@ -13,7 +13,7 @@
         <PackageTags>SourceGenerator Source Generator Excel Helper Extension Extensions Productivity Maestria Mastery C# .NET CSharp</PackageTags>
         <RepositoryUrl>https://github.com/MaestriaNet/TypeProviders</RepositoryUrl>
         <Title>Maestria.TypeProviders</Title>
-        <Version>1.1.1</Version>
+        <Version>1.1.2</Version>
     </PropertyGroup>
 
     <PropertyGroup>

@@ -22,7 +22,7 @@
 
     <!-- NuGet package reference -->
     <!-- <ItemGroup>
-        <PackageReference Include="Maestria.TypeProviders" Version="1.1.1" />
+        <PackageReference Include="Maestria.TypeProviders" Version="1.1.2" />
     </ItemGroup> -->
 
 </Project>
