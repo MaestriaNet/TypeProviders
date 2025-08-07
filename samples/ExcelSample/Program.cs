@@ -108,9 +108,7 @@ namespace ExcelSample
         private static string GetFieldDataType(IXLWorksheet sheet, int columnIndex)
         {
             var rows = sheet.RowsUsed()
-                .Where(x =>
-                    x.Cell(columnIndex).Value != null &&
-                    x.Cell(columnIndex).Value.ToString() != string.Empty)
+                .Where(x => x.Cell(columnIndex).Value.ToString() != string.Empty)
                 .ToImmutableArray();
             if (rows.Length < 2)
                 return "object";
@@ -119,14 +117,10 @@ namespace ExcelSample
             if (cell.DataType == XLDataType.Text)
                 return "string";
 
-            var hasNull = sheet.RowsUsed().Any(x =>
-                x.Cell(columnIndex).CachedValue == null ||
-                x.Cell(columnIndex).CachedValue.ToString() == string.Empty);
+            var hasNull = sheet.RowsUsed().Any(x => x.Cell(columnIndex).CachedValue.ToString() == string.Empty);
             if (cell.DataType == XLDataType.Number)
             {
-                var isDecimal = rows.Any(x =>
-                    x.Cell(columnIndex).CachedValue != null &&
-                    x.Cell(columnIndex).CachedValue.ToInt32Safe() != x.Cell(columnIndex).CachedValue.ToDecimalSafe());
+                var isDecimal = rows.Any(x => x.Cell(columnIndex).CachedValue.ToInt32Safe() != x.Cell(columnIndex).CachedValue.ToDecimalSafe());
 
                 return (isDecimal ? "decimal" : "int") + (hasNull ? "?" : "");
             }
