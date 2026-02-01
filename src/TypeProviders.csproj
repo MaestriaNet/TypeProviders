@@ -30,6 +30,8 @@
         <NoWarn>CS1591</NoWarn>
         <RootNamespace>Maestria.TypeProviders</RootNamespace>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
     </PropertyGroup>
 
     <ItemGroup>
@@ -46,48 +48,53 @@
 
     <!-- Dependencies default -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="5.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" />
     </ItemGroup>
 
     <!-- Dependencies needs to include in package output, but not referencing on the application runtime  -->
     <ItemGroup>
-        <PackageReference Include="ClosedXML" Version="0.95.4" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="DocumentFormat.OpenXml" Pack="false" Version="2.7.2" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Maestria.Extensions" Version="3.5.0" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Maestria.Extensions.FluentCast" Pack="false" Version="2.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="System.Drawing.Common" Pack="false" Version="4.5.0" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="System.IO.Packaging" Pack="false" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
-
-    <Target Name="GetDependencyTargetPaths">
-        <ItemGroup>
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard1.3\*.dll" IncludeRuntimeDependency="false" />
-        </ItemGroup>
-    </Target>
-
-    <ItemGroup>
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <PackageReference Include="ClosedXML" Version="0.105.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Maestria.Extensions" Version="3.7.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Maestria.Extensions.FluentCast" Version="2.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="SixLabors.Fonts" Version="1.0.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.Drawing.Common" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
     </ItemGroup>
 
     <PropertyGroup>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     </PropertyGroup>
+
+<!--    <ItemGroup>-->
+<!--        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--    </ItemGroup>-->
+
+    <Target Name="GetDependencyTargetPaths">
+        <ItemGroup>
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+        </ItemGroup>
+    </Target>
+    
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
 
     <!-- Nugetspec -->
     <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
