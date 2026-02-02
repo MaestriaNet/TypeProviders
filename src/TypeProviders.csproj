@@ -38,6 +38,10 @@
         <None Include="..\resources\icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
+    <ItemGroup Label="To create package and allow code generations">
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+
     <!-- Embedded sources code used by the source generator and user application -->
     <ItemGroup>
         <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
@@ -104,10 +108,6 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
-    
-<!--    <ItemGroup>-->
-<!--        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />-->
-<!--    </ItemGroup>-->
 
     <!-- Nugetspec -->
     <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
