@@ -1,59 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using Maestria.Extensions;
-using Maestria.Extensions.FluentCast;
 using Maestria.TypeProviders.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Maestria.TypeProviders.Excel
 {
     [Generator]
-    public class ExcelGenerator : ISourceGenerator
+    public class ExcelGenerator : IIncrementalGenerator
     {
         private static readonly char[] UpperCharsAfterWhenGenerateDotnetPropertyName = { ' ', '/', '\\', '-', '_' };
-        public void Initialize(GeneratorInitializationContext context)
+        
+        public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-/*#if DEBUG
-            if (!Debugger.IsAttached)
-                Debugger.Launch();
-#endif*/
-            context.RegisterForSyntaxNotifications(() => new ExcelContextReceiver());
-            context.RegisterForPostInitialization(ctx =>
-                ctx.AddSource("ExcelProviderAttribute.cs",
-                    Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs")));
+#if DEBUG
+            if (!System.Diagnostics.Debugger.IsAttached)
+                System.Diagnostics.Debugger.Launch();
+#endif
+            // Registrar a fonte de atributo
+            context.RegisterPostInitializationOutput(ctx => 
+            {
+                ctx.AddSource("ExcelExtensions.g.cs", Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
+                ctx.AddSource("ExcelProviderAttribute.g.cs", Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs"));
+                ctx.AddSource("ExcelGeneratorException.g.cs", Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelGeneratorException.cs"));
+            });
+
+            // Provider para classes com atributo ExcelProvider
+            var classProvider = context.SyntaxProvider
+                .CreateSyntaxProvider(
+                    predicate: (syntax, _) => IsCandidateClass(syntax),
+                    transform: (syntaxContext, _) => GetSemanticTarget(syntaxContext))
+                .Where(x => x is not null)
+                .Collect();
+
+            // // Provider para compilation
+            var compilationProvider = context.CompilationProvider;
+            //
+            // // Combinar os providers
+            var combined = classProvider.Combine(compilationProvider);
+            //
+            context.RegisterSourceOutput(combined, Execute);
         }
 
-        public void Execute(GeneratorExecutionContext context)
+        private static bool IsCandidateClass(SyntaxNode syntax)
         {
-            if (context.SyntaxContextReceiver is not ExcelContextReceiver receiver)
+            return syntax is ClassDeclarationSyntax classDecl && 
+                   classDecl.AttributeLists.Count > 0;
+        }
+
+        private static INamedTypeSymbol GetSemanticTarget(GeneratorSyntaxContext context)
+        {
+            var classDecl = (ClassDeclarationSyntax)context.Node;
+            var symbol = context.SemanticModel.GetDeclaredSymbol(classDecl);
+            
+            if (symbol?.HasAttribute(ExcelProviderAttribute.TypeFullName) == true)
+                return symbol;
+            
+            return null;
+        }
+
+        private void Execute(SourceProductionContext context, (ImmutableArray<INamedTypeSymbol> classes, Compilation compilation) pair)
+        {
+            var (classes, _) = pair;
+
+            if (classes.Length == 0)
                 return;
-
-            var classSymbols = GetCandidateClassSymbols(context, receiver);
-
-            if (classSymbols.Any())
-                context.AddSource("ExcelExtensions.cs",
-                    Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
-
-            foreach (var classSymbol in classSymbols)
+            
+            // Gerar código para cada classe
+            foreach (var classSymbol in classes)
             {
                 try
                 {
                     var name = classSymbol.ToDisplayString();
+                    var sourceCode = GenerateSourceCode(classSymbol);
                     context.AddSource(
-                        $"{name}.ExcelTypeProvider.cs",
-                        SourceText.From(GenerateSourceCode(classSymbol), Encoding.UTF8));
+                        $"{name}.g.cs",
+                        SourceText.From(sourceCode, Encoding.UTF8));
                 }
                 catch (Exception e)
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticErrors.Generic, classSymbol.Locations.First(), classSymbol.Name, e.Message));
+                    foreach (var location in classSymbol.Locations)
+                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticErrors.Generic, location, classSymbol.Name, e.ToString().Replace(Environment.NewLine, " ===> ")));
                 }
             }
         }
@@ -82,8 +117,8 @@ namespace Maestria.TypeProviders.Excel
             var sheetNameAtt = attributes.FirstOrDefault(x => x.Key == nameof(ExcelProviderAttribute.SheetName));
 
             var templatePath = templatePathAtt.Value.Value.ToString();
-            var sheetPosition = sheetPositionAtt.Value.Value.ToInt32Safe();
-            var sheetName = sheetNameAtt.Value.Value.ToStringSafe();
+            var sheetPosition = sheetPositionAtt.Value.Value is not null ? Convert.ToInt32(sheetPositionAtt.Value.Value) : (int?)null;
+            var sheetName = sheetNameAtt.Value.Value is not null ? Convert.ToString(sheetNameAtt.Value.Value) : null;
 
             var result = new ExcelProviderAttribute();
             result.TemplatePath = templatePath;
@@ -93,15 +128,6 @@ namespace Maestria.TypeProviders.Excel
             return result;
         }
 
-        private static IEnumerable<INamedTypeSymbol> GetCandidateClassSymbols(GeneratorExecutionContext context, ExcelContextReceiver receiver)
-        {
-            var compilation = context.Compilation;
-            return receiver.CandidateClasses
-                .Select(x => compilation
-                    .GetSemanticModel(x.SyntaxTree)
-                    .GetDeclaredSymbol(x))
-                .Where(x => x.HasAttribute(ExcelProviderAttribute.TypeFullName));
-        }
 
         private static IEnumerable<FieldMapInfo> GetExcelColumns(INamedTypeSymbol classSymbol, ExcelProviderAttribute attributes)
         {
@@ -112,7 +138,7 @@ namespace Maestria.TypeProviders.Excel
                 var basePath = string.IsNullOrWhiteSpace(location?.GetLineSpan().Path) ? "" : Path.GetDirectoryName(location.GetLineSpan().Path);
                 templatePath = Path.Combine(basePath, templatePath);
                 if (!File.Exists(templatePath))
-                    throw new ArgumentException($"Excel template file not found: {attributes.TemplatePath}");
+                    throw new FileNotFoundException($"Excel template file not found: {attributes.TemplatePath}");
             }
 
             using var workbook = ExcelExtensions.OpenWorkbook(templatePath);
@@ -153,40 +179,37 @@ namespace Maestria.TypeProviders.Excel
 
         private static string GetFieldDataType(IXLWorksheet sheet, int columnIndex)
         {
-            var rows = sheet.RowsUsed()
-                .Where(x =>
-                    x.Cell(columnIndex).Value != null &&
-                    x.Cell(columnIndex).Value.ToString() != string.Empty)
-                .ToImmutableArray();
-            if (rows.Length < 2)
+            // Selecionar linhas utilizadas e remover header
+            var rowsUsed = sheet.RowsUsed()
+                .Select(x => x.Cell(columnIndex))
+                .Skip(1)
+                .ToArray();
+            
+            var rowsWithValue = rowsUsed.Where(x => !x.IsEmpty()).ToArray();
+            if (rowsWithValue.Length < 1)
                 return "object";
 
-            var cell = rows[1].Cell(columnIndex);
-            if (cell.DataType == XLDataType.Text)
+            var cellWithValue = rowsWithValue[1];
+            if (cellWithValue.DataType == XLDataType.Text)
                 return "string";
 
-            var hasNull = sheet.RowsUsed().Any(x =>
-                x.Cell(columnIndex).CachedValue == null ||
-                x.Cell(columnIndex).CachedValue.ToString() == string.Empty);
-            if (cell.DataType == XLDataType.Number)
+            var hasEmptyCell = rowsWithValue.Length < rowsUsed.Length;
+            
+            if (cellWithValue.DataType == XLDataType.Number)
             {
-                var isDecimal = rows.Any(x =>
-                    x.Cell(columnIndex).CachedValue != null &&
-                    x.Cell(columnIndex).CachedValue.ToInt32Safe() != x.Cell(columnIndex).CachedValue.ToDecimalSafe());
-
-                return (isDecimal ? "decimal" : "int") + (hasNull ? "?" : "");
+                var allNonEmptyIsInt = rowsWithValue
+                    .All(x => x.DataType == XLDataType.Number && x.TryGetValue<long>(out _));
+                
+                return (allNonEmptyIsInt ? "int" : "decimal") + (hasEmptyCell ? "?" : string.Empty);
             }
 
-            var dataType = cell.DataType switch
+            var dataType = cellWithValue.DataType switch
             {
                 XLDataType.Boolean => "bool",
                 XLDataType.DateTime => "DateTime",
                 XLDataType.TimeSpan => "TimeSpan",
-                _ => throw new ArgumentOutOfRangeException(nameof(cell.DataType),
-                    $"Not expected excel column data type: {cell.DataType}")
-            };
-            if (hasNull)
-                dataType += "?";
+                _ => throw new ExcelArgumentOutOfRangeException(nameof(cellWithValue.DataType), $"Not expected excel column data type: {cellWithValue.DataType}")
+            } + (hasEmptyCell ? "?" : string.Empty);
             return dataType;
         }
     }

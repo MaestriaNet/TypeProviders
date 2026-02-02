@@ -98,7 +98,7 @@ using Maestria.TypeProviders.Excel;
             {{
 ");
             _opts.Fields.Iterate(x =>
-                source.Append($"                var {x.PropertyName.WithFirstCharLower()}Value = row.Cell(indexOf{x.PropertyName}).Value;\r\n"));
+                source.Append($"                var {x.PropertyName.WithFirstCharLower()}Value = row.Cell(indexOf{x.PropertyName});\r\n"));
 
             source.Append(@$"                result.Add(new {_opts.ClassName}
                 {{
