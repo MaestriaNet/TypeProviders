@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Resources/">
+    <File Path="resources/Excel.xlsx" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="samples/ExcelSample/ExcelSample.csproj" />
+    <Project Path="samples/ExcelSampleClosedXml/ExcelSampleClosedXml.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="appveyor.yml" />
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/TypeProviders.csproj" />
+  <Project Path="tests/TypeProviders.Test.csproj" />
+</Solution>
