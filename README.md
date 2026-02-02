@@ -25,6 +25,8 @@ First, install [Maestria.Type.Providers](https://www.nuget.org/packages/Maestria
 
 ```bash
 dotnet add package Maestria.TypeProviders
+dotnet add package Maestria.Extensions
+dotnet add package ClosedXML
 ```
 
 ## Providers x Dependencies
@@ -47,7 +49,6 @@ Generate strong data struct and class factory to load excel data from xls/xlsx t
 **Dependencies install**
 
 ```bash
-dotnet add package Maestria.TypeProviders.FluentCast
 dotnet add package ClosedXML
 ```
 **[Source code sample](samples/ExcelSample/Program.cs#L12)**
