@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
 using Maestria.Extensions;
-using Maestria.Extensions.FluentCast;
 using Maestria.TypeProviders.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -27,9 +26,12 @@ namespace Maestria.TypeProviders.Excel
                 System.Diagnostics.Debugger.Launch();
 #endif
             // Registrar a fonte de atributo
-            context.RegisterPostInitializationOutput(ctx =>
-                ctx.AddSource("ExcelProviderAttribute.cs",
-                    Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs")));
+            context.RegisterPostInitializationOutput(ctx => 
+            {
+                ctx.AddSource("ExcelExtensions.g.cs", Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
+                ctx.AddSource("ExcelProviderAttribute.g.cs", Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelProviderAttribute.cs"));
+                ctx.AddSource("ExcelGeneratorException.g.cs", Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelGeneratorException.cs"));
+            });
 
             // Provider para classes com atributo ExcelProvider
             var classProvider = context.SyntaxProvider
@@ -71,13 +73,7 @@ namespace Maestria.TypeProviders.Excel
 
             if (classes.Length == 0)
                 return;
-
-            // Adicionar ExcelExtensions uma única vez
-            context.AddSource("ExcelExtensions.cs",
-                Extensions.GetEmbeddedSourceCode("Maestria.TypeProviders.Excel.ExcelExtensions.cs"));
-
             
-            // context.ReportDiagnostic(Diagnostic.Create(DiagnosticErrors.Generic, classes[0].Locations.First(), "aaa", "bbb"));
             // Gerar código para cada classe
             foreach (var classSymbol in classes)
             {
@@ -86,7 +82,7 @@ namespace Maestria.TypeProviders.Excel
                     var name = classSymbol.ToDisplayString();
                     var sourceCode = GenerateSourceCode(classSymbol);
                     context.AddSource(
-                        $"{name}.ExcelTypeProvider.cs",
+                        $"{name}.g.cs",
                         SourceText.From(sourceCode, Encoding.UTF8));
                 }
                 catch (Exception e)
@@ -121,8 +117,8 @@ namespace Maestria.TypeProviders.Excel
             var sheetNameAtt = attributes.FirstOrDefault(x => x.Key == nameof(ExcelProviderAttribute.SheetName));
 
             var templatePath = templatePathAtt.Value.Value.ToString();
-            var sheetPosition = sheetPositionAtt.Value.Value.ToInt32Safe();
-            var sheetName = sheetNameAtt.Value.Value.ToStringSafe();
+            var sheetPosition = sheetPositionAtt.Value.Value is not null ? Convert.ToInt32(sheetPositionAtt.Value.Value) : (int?)null;
+            var sheetName = sheetNameAtt.Value.Value is not null ? Convert.ToString(sheetNameAtt.Value.Value) : null;
 
             var result = new ExcelProviderAttribute();
             result.TemplatePath = templatePath;
@@ -183,40 +179,37 @@ namespace Maestria.TypeProviders.Excel
 
         private static string GetFieldDataType(IXLWorksheet sheet, int columnIndex)
         {
-            var rows = sheet.RowsUsed()
-                .Where(x => !x.Cell(columnIndex).IsEmpty())
+            // Selecionar linhas utilizadas e remover header
+            var rowsUsed = sheet.RowsUsed()
+                .Select(x => x.Cell(columnIndex))
+                .Skip(1)
                 .ToArray();
-            if (rows.Length < 2)
+            
+            var rowsWithValue = rowsUsed.Where(x => !x.IsEmpty()).ToArray();
+            if (rowsWithValue.Length < 1)
                 return "object";
 
-            var valueRows = new IXLRow[rows.Length - 1];
-            Array.Copy(rows, 1, valueRows, 0, valueRows.Length);
-
-            var cell = valueRows[0].Cell(columnIndex);
-            if (cell.DataType == XLDataType.Text)
+            var cellWithValue = rowsWithValue[1];
+            if (cellWithValue.DataType == XLDataType.Text)
                 return "string";
 
-            var hasNull = valueRows.Any(x => x.Cell(columnIndex).IsEmpty());
-            if (cell.DataType == XLDataType.Number)
+            var hasEmptyCell = rowsWithValue.Length < rowsUsed.Length;
+            
+            if (cellWithValue.DataType == XLDataType.Number)
             {
-                var allNonEmptyIsInt = valueRows
-                    .Select(x => x.Cell(columnIndex))
-                    .Where(x => !x.IsEmpty())
+                var allNonEmptyIsInt = rowsWithValue
                     .All(x => x.DataType == XLDataType.Number && x.TryGetValue<long>(out _));
                 
-                return $"{(allNonEmptyIsInt ? "int" : "decimal")}{(hasNull ? "?" : string.Empty)}";
+                return (allNonEmptyIsInt ? "int" : "decimal") + (hasEmptyCell ? "?" : string.Empty);
             }
 
-            var dataType = cell.DataType switch
+            var dataType = cellWithValue.DataType switch
             {
                 XLDataType.Boolean => "bool",
                 XLDataType.DateTime => "DateTime",
                 XLDataType.TimeSpan => "TimeSpan",
-                _ => throw new ArgumentOutOfRangeException(nameof(cell.DataType),
-                    $"Not expected excel column data type: {cell.DataType}")
-            };
-            if (hasNull)
-                dataType += "?";
+                _ => throw new ExcelArgumentOutOfRangeException(nameof(cellWithValue.DataType), $"Not expected excel column data type: {cellWithValue.DataType}")
+            } + (hasEmptyCell ? "?" : string.Empty);
             return dataType;
         }
     }

@@ -19,7 +19,7 @@
     </PropertyGroup>
 
     <!-- Project reference to debug -->
-    <ItemGroup >
+    <ItemGroup Condition="$(UseLocalRef)">
         <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 

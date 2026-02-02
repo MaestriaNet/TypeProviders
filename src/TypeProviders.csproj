@@ -41,8 +41,9 @@
 
     <!-- Embedded sources code used by the source generator and user application -->
     <ItemGroup>
-        <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
         <EmbeddedResource Include="Excel\ExcelExtensions.cs" />
+        <EmbeddedResource Include="Excel\ExcelGeneratorException.cs" />
+        <EmbeddedResource Include="Excel\ExcelProviderAttribute.cs" />
         <EmbeddedResource Include="OpenApi\OpenApiProviderAttribute.cs" />
     </ItemGroup>
 
@@ -62,7 +63,6 @@
         <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="ExcelNumberFormat" Version="1.1.0"  Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Maestria.Extensions" Version="3.7.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Maestria.Extensions.FluentCast" Version="2.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="RBush" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="RBush.Signed" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
@@ -82,7 +82,6 @@
 <!--        <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
-<!--        <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
@@ -98,7 +97,6 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgRBush)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />

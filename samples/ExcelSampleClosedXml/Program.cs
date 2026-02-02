@@ -56,12 +56,17 @@ namespace ExcelSample
                 {
                     var id = row.Cell(sheet.ColumnByName("Id")).GetValue<int>();
                     var name = row.Cell(sheet.ColumnByName("Name")).GetText();
-                    var valor = row.Cell(sheet.ColumnByName("Value")).TryGetValue<int>(out var outVal) ? outVal : (double?)null;
+                    var valor = row.Cell(sheet.ColumnByName("Value")).GetValue<decimal?>();
                     var prop = row.Cell(sheet.ColumnByName("Prop")).GetValue<int>();
                     var calculatedProp = row.Cell(sheet.ColumnByName("Calculated Prop")).GetValue<int>();
                     
                     Console.WriteLine($"| {id,3} | {name,-10} | {valor,10:C2} | {prop,5} | {calculatedProp,15} |");
                 }
+                
+                // teste
+                var rowsUsed = sheet.RowsUsed().ToArray();
+                var teste = rowsUsed.Any(x => x.Cell(2).Value.IsBlank);
+                Console.WriteLine($"Valor vazio? " + teste);
             }
             finally
             {
