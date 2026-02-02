@@ -1,9 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+    <Import Project=".\Version.props" />
+
+    <PropertyGroup Label="Build">
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>Maestria.TypeProviders</AssemblyName>
+        <RootNamespace>Maestria.TypeProviders</RootNamespace>
+        <LangVersion>14</LangVersion>
+        <NoWarn>CS1591</NoWarn>
+        <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+
+        <!-- old properties - need review -->
+        <DevelopmentDependency>true</DevelopmentDependency>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Package info">
         <Authors>Fábio Monteiro Naspolini</Authors>
         <Company>Fábio Monteiro Naspolini</Company>
         <Description>.NET Source Generator for Excel.</Description>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
         <License>https://github.com/MaestriaNet/TypeProviders/blob/master/LICENSE</License>
         <PackageIcon>icon.png</PackageIcon>
         <PackageIconUrl>https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/icon.png</PackageIconUrl>
@@ -13,28 +31,9 @@
         <PackageTags>SourceGenerator Source Generator Excel Helper Extension Extensions Productivity Maestria Mastery C# .NET CSharp</PackageTags>
         <RepositoryUrl>https://github.com/MaestriaNet/TypeProviders</RepositoryUrl>
         <Title>Maestria.TypeProviders</Title>
-        <Version>1.1.2</Version>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <DevelopmentDependency>true</DevelopmentDependency>
-        <IncludeBuildOutput>false</IncludeBuildOutput>
-        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <AssemblyName>Maestria.TypeProviders</AssemblyName>
-        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
-        <LangVersion>14</LangVersion>
-        <NoWarn>CS1591</NoWarn>
-        <RootNamespace>Maestria.TypeProviders</RootNamespace>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
-        <IsRoslynComponent>true</IsRoslynComponent>
-    </PropertyGroup>
-
-    <ItemGroup>
+    <ItemGroup Label="Package files">
         <None Include="..\README.md" Pack="true" PackagePath="\" />
         <None Include="..\resources\icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
