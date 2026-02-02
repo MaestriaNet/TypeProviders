@@ -1,14 +1,19 @@
-# Maestria.Type.Providers
+# Maestria.TypeProviders
 
-[![Build status](https://ci.appveyor.com/api/projects/status/mvosd40vqsgrvkr0/branch/master?svg=true)](https://ci.appveyor.com/project/fabionaspolini/maestria-typeproviders/branch/master)
-[![NuGet](https://buildstats.info/nuget/Maestria.TypeProviders)](https://www.nuget.org/packages/Maestria.TypeProviders)
-[![MyGet](https://img.shields.io/myget/maestrianet/v/Maestria.TypeProviders?label=MyGet)](https://www.myget.org/feed/maestrianet/package/nuget/Maestria.TypeProviders)
+[![NuGet Version](https://img.shields.io/nuget/v/Maestria.TypeProviders)](https://www.nuget.org/packages/Maestria.TypeProviders/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Maestria.TypeProviders)](https://www.nuget.org/packages/Maestria.TypeProviders/)
 [![Apimundo](https://img.shields.io/badge/Maestria.TypeProviders%20API-Apimundo-728199.svg)](https://apimundo.com/organizations/nuget-org/nuget-feeds/public/packages/Maestria.TypeProviders/versions/latest?tab=types)
 
+---
 
-[![Build History](https://buildstats.info/appveyor/chart/fabionaspolini/maestria-typeproviders?branch=master)](https://ci.appveyor.com/project/fabionaspolini/maestria-typeproviders/history?branch=master)
+[![buy-me-a-coffee](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+[![smile.png](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/smile.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+
+If my contributions helped you, please help me buy a coffee :D
 
 [![donate](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/btn_donate.gif)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
+
+--
 
 ## What is Maestria.Type.Providers?
 
@@ -37,13 +42,13 @@ Generate strong data struct and class factory to load excel data from xls/xlsx t
 **Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)**
 
 **Dependencies**
-- [Maestria.Extensions.FluentCast](https://github.com/MaestriaNet/Extensions.FluentCast)
+- [Maestria.TypeProviders.FluentCast](https://github.com/MaestriaNet/Extensions.FluentCast)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 
 **Dependencies install**
 
 ```bash
-dotnet add package Maestria.Extensions.FluentCast
+dotnet add package Maestria.TypeProviders.FluentCast
 dotnet add package ClosedXML
 ```
 **[Source code sample](samples/ExcelSample/Program.cs#L12)**
@@ -136,7 +141,7 @@ On next build, if there was no change on yout source code used by generators, th
 
 [Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L4)
 
-----
+---
 
 [![buy-me-a-coffee](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/buy-me-a-coffee.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
 [![smile.png](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/smile.png)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
