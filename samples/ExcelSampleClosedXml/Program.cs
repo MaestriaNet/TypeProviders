@@ -48,15 +48,19 @@ namespace ExcelSample
                     var valueCell = sheet.Row(2).Cell(i);
                     Console.WriteLine($"Column {i}: {headerCell.Value} = {valueCell.DataType} | {GetFieldDataType(sheet, i)}");
                 }
+                
+                Console.WriteLine();
+                Console.WriteLine($"| {"ID",3} | {"Name",-10} | {"Valor",10} | {"prop",5} | {"calculatedProp",15} |");
 
                 foreach (var row in sheet.Rows(2, sheet.RowsUsed().Count()))
                 {
                     var id = row.Cell(sheet.ColumnByName("Id")).GetValue<int>();
                     var name = row.Cell(sheet.ColumnByName("Name")).GetText();
-                    var valor = row.Cell(sheet.ColumnByName("Value")).TryGetValue<decimal>(out var outVal) ? outVal : (decimal?)null;
+                    var valor = row.Cell(sheet.ColumnByName("Value")).TryGetValue<int>(out var outVal) ? outVal : (double?)null;
                     var prop = row.Cell(sheet.ColumnByName("Prop")).GetValue<int>();
                     var calculatedProp = row.Cell(sheet.ColumnByName("Calculated Prop")).GetValue<int>();
-                    Console.WriteLine($"| {id,3} | {name,-10} | {valor,10:C2} | {prop,5} | {calculatedProp,5} |");
+                    
+                    Console.WriteLine($"| {id,3} | {name,-10} | {valor,10:C2} | {prop,5} | {calculatedProp,15} |");
                 }
             }
             finally

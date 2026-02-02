@@ -26,7 +26,7 @@
         <AssemblyName>Maestria.TypeProviders</AssemblyName>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
         <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
-        <LangVersion>9</LangVersion>
+        <LangVersion>14</LangVersion>
         <NoWarn>CS1591</NoWarn>
         <RootNamespace>Maestria.TypeProviders</RootNamespace>
         <TargetFramework>netstandard2.0</TargetFramework>
@@ -57,10 +57,15 @@
     <!-- Dependencies needs to include in package output, but not referencing on the application runtime  -->
     <ItemGroup>
         <PackageReference Include="ClosedXML" Version="0.105.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="ClosedXML.Parser" Version="2.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="ExcelNumberFormat" Version="1.1.0"  Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Maestria.Extensions" Version="3.7.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Maestria.Extensions.FluentCast" Version="2.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="RBush" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="RBush.Signed" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="SixLabors.Fonts" Version="1.0.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.Drawing.Common" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.IO.Packaging" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
@@ -72,9 +77,15 @@
 
 <!--    <ItemGroup>-->
 <!--        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgClosedXML_Parser)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
 <!--    </ItemGroup>-->
@@ -82,19 +93,24 @@
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
             <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgClosedXML_Parser)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions_FluentCast)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgRBush)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
     
-    <ItemGroup>
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />-->
+<!--    </ItemGroup>-->
 
     <!-- Nugetspec -->
     <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">

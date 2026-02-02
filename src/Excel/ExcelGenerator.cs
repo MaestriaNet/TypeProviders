@@ -92,7 +92,7 @@ namespace Maestria.TypeProviders.Excel
                 catch (Exception e)
                 {
                     foreach (var location in classSymbol.Locations)
-                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticErrors.Generic, location, classSymbol.Name, e.ToString()));
+                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticErrors.Generic, location, classSymbol.Name, e.ToString().Replace(Environment.NewLine, " ===> ")));
                 }
             }
         }
@@ -142,7 +142,7 @@ namespace Maestria.TypeProviders.Excel
                 var basePath = string.IsNullOrWhiteSpace(location?.GetLineSpan().Path) ? "" : Path.GetDirectoryName(location.GetLineSpan().Path);
                 templatePath = Path.Combine(basePath, templatePath);
                 if (!File.Exists(templatePath))
-                    throw new ArgumentException($"Excel template file not found: {attributes.TemplatePath}");
+                    throw new FileNotFoundException($"Excel template file not found: {attributes.TemplatePath}");
             }
 
             using var workbook = ExcelExtensions.OpenWorkbook(templatePath);
@@ -189,18 +189,22 @@ namespace Maestria.TypeProviders.Excel
             if (rows.Length < 2)
                 return "object";
 
-            var cell = rows[1].Cell(columnIndex);
+            var valueRows = new IXLRow[rows.Length - 1];
+            Array.Copy(rows, 1, valueRows, 0, valueRows.Length);
+
+            var cell = valueRows[0].Cell(columnIndex);
             if (cell.DataType == XLDataType.Text)
                 return "string";
 
-            var hasNull = sheet.RowsUsed().Any(x => x.Cell(columnIndex).CachedValue.IsBlank);
+            var hasNull = valueRows.Any(x => x.Cell(columnIndex).IsEmpty());
             if (cell.DataType == XLDataType.Number)
             {
-                var isDecimal = rows.Any(x =>
-                    !x.Cell(columnIndex).CachedValue.IsBlank &&
-                    x.Cell(columnIndex).CachedValue.GetNumber() - x.Cell(columnIndex).CachedValue.GetNumber().ToInt64Safe() > 0.001);
-
-                return (isDecimal ? "decimal" : "int") + (hasNull ? "?" : "");
+                var allNonEmptyIsInt = valueRows
+                    .Select(x => x.Cell(columnIndex))
+                    .Where(x => !x.IsEmpty())
+                    .All(x => x.DataType == XLDataType.Number && x.TryGetValue<long>(out _));
+                
+                return $"{(allNonEmptyIsInt ? "int" : "decimal")}{(hasNull ? "?" : string.Empty)}";
             }
 
             var dataType = cell.DataType switch
