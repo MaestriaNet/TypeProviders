@@ -13,7 +13,7 @@ If my contributions helped you, please help me buy a coffee :D
 
 [![donate](https://raw.githubusercontent.com/MaestriaNet/TypeProviders/master/resources/btn_donate.gif)](https://www.paypal.com/donate?hosted_button_id=8RSES6GAYH9BL)
 
---
+---
 
 ## What is Maestria.Type.Providers?
 
