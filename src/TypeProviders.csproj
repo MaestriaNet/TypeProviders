@@ -67,8 +67,8 @@
         <PackageReference Include="ExcelNumberFormat" Version="1.1.0"  Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Maestria.Extensions" Version="3.7.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="RBush" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="RBush.Signed" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+<!--        <PackageReference Include="RBush" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="RBush.Signed" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />-->
         <PackageReference Include="SixLabors.Fonts" Version="1.0.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.Drawing.Common" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="System.IO.Packaging" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
@@ -77,21 +77,6 @@
     <PropertyGroup>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     </PropertyGroup>
-
-    <ItemGroup Label="Necessário para localizar dependências durante processo de build">
-        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgClosedXML_Parser)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
 
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
@@ -109,6 +94,21 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
+
+<!--    <ItemGroup Label="Necessário para localizar dependências durante processo de build">-->
+<!--        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgClosedXML_Parser)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
+<!--    </ItemGroup>-->
 
     <!-- Nugetspec -->
     <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
