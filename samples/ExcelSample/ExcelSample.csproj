@@ -8,6 +8,7 @@
     <ItemGroup>
         <PackageReference Include="ClosedXML" Version="0.105.0" />
         <PackageReference Include="Maestria.Extensions" Version="3.7.2" />
+        <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
         <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
         <PackageReference Include="System.IO.Packaging" Version="10.0.2" />
     </ItemGroup>
