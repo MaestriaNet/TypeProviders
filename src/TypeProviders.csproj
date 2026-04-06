@@ -54,33 +54,54 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" />
     </ItemGroup>
 
-    <!-- Dependencies needs to include in package output, but not referencing on the application runtime  -->
+    <!-- Dependencies need to include in package output as analyzer dependencies -->
     <ItemGroup>
-        <PackageReference Include="ClosedXML" Version="0.105.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="ClosedXML.Parser" Version="2.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="ExcelNumberFormat" Version="1.1.0"  Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-<!--        <PackageReference Include="RBush" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />-->
-        <PackageReference Include="RBush.Signed" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="SixLabors.Fonts" Version="1.0.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="System.Drawing.Common" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="System.IO.Packaging" Version="10.0.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="ClosedXML" Version="0.105.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="ClosedXML.Parser" Version="2.0.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="ExcelNumberFormat" Version="1.1.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" PrivateAssets="all" GeneratePathProperty="true" />
+<!--        <PackageReference Include="RBush" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />-->
+        <PackageReference Include="RBush.Signed" Version="4.0.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="SixLabors.Fonts" Version="1.0.1" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.Drawing.Common" Version="10.0.2" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.2" PrivateAssets="all" GeneratePathProperty="true" />
+        <!-- Transitive dependencies -->
+<!--        <PackageReference Include="System.Buffers" Version="4.6.1" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Memory" Version="4.6.3" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Collections.Immutable" Version="9.0.0" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Reflection.Metadata" Version="9.0.0" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0" PrivateAssets="all" GeneratePathProperty="true" />-->
+<!--        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" PrivateAssets="all" GeneratePathProperty="true" />-->
     </ItemGroup>
 
-    <ItemGroup Label="Necessário para localizar dependências durante processo de build">
-        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgClosedXML_Parser)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-<!--        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
-        <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Include analyzer dependencies in the NuGet package -->
+    <ItemGroup>
+        <None Include="$(PkgClosedXML)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgClosedXML_Parser)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+<!--        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />-->
+        <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgSixLabors_Fonts)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgSystem_Drawing_Common)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgSystem_IO_Packaging)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <!-- Transitive dependencies -->
+<!--        <None Include="$(PkgSystem_Buffers)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Buffers)')" />-->
+<!--        <None Include="$(PkgSystem_Memory)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Memory)')" />-->
+<!--        <None Include="$(PkgSystem_Numerics_Vectors)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Numerics_Vectors)')" />-->
+<!--        <None Include="$(PkgSystem_Runtime_CompilerServices_Unsafe)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Runtime_CompilerServices_Unsafe)')" />-->
+<!--        <None Include="$(PkgSystem_Collections_Immutable)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Collections_Immutable)')" />-->
+<!--        <None Include="$(PkgSystem_Reflection_Metadata)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Reflection_Metadata)')" />-->
+<!--        <None Include="$(PkgSystem_Text_Encoding_CodePages)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Text_Encoding_CodePages)')" />-->
+<!--        <None Include="$(PkgSystem_Threading_Tasks_Extensions)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_Threading_Tasks_Extensions)')" />-->
+<!--        <None Include="$(PkgSystem_ComponentModel_Annotations)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" Condition="Exists('$(PkgSystem_ComponentModel_Annotations)')" />-->
     </ItemGroup>
 
     <Target Name="GetDependencyTargetPaths">
