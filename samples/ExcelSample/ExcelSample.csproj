@@ -11,7 +11,7 @@
     
     <!-- Use "true" to debug this project  -->
     <PropertyGroup>
-        <UseLocalRef>false</UseLocalRef>
+        <UseLocalRef>true</UseLocalRef>
     </PropertyGroup>
 
     <!-- Project reference to debug -->

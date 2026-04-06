@@ -187,8 +187,8 @@ namespace Maestria.TypeProviders.Excel
             var rowsWithValue = rowsUsed.Where(x => !x.IsEmpty()).ToArray();
             if (rowsWithValue.Length < 1)
                 return "object";
-
-            var cellWithValue = rowsWithValue[1];
+            
+            var cellWithValue = rowsWithValue[0]; // Here the first index is zero because now is array, now row index
             if (cellWithValue.DataType == XLDataType.Text)
                 return "string";
 
