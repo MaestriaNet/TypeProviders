@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Maestria.Extensions;
 using Maestria.TypeProviders.Common;
+using Maestria.TypeProviders.Internals;
 
 namespace Maestria.TypeProviders.Excel
 {
@@ -53,7 +53,7 @@ using Maestria.TypeProviders.Excel;
     {{
 ");
             var lastColumn = _opts.Fields.Last();
-            _opts.Fields.Iterate(x =>
+            _opts.Fields.ForEach(x =>
                 source.Append($"        {x.GetSourceCodeToProperty()}{(lastColumn == x ? "" : "\r\n")}"));
 
             source.Append(
@@ -90,19 +90,19 @@ using Maestria.TypeProviders.Excel;
             var result = new List<{_opts.ClassName}>();
             var sheet = string.IsNullOrEmpty(sheetName) ? workbook.Worksheet(sheetPosition) : workbook.Worksheet(sheetName);
 ");
-            _opts.Fields.Iterate(x =>
+            _opts.Fields.ForEach(x =>
                 source.Append($"            var indexOf{x.PropertyName} = sheet.ColumnByName(@\"{x.SourceName}\");\r\n"));
 
             source.Append(@$"            foreach (var row in sheet.Rows(2, sheet.RowUsedCount()))
             {{
 ");
-            _opts.Fields.Iterate(x =>
+            _opts.Fields.ForEach(x =>
                 source.Append($"                var {x.PropertyName.WithFirstCharLower()}Value = row.Cell(indexOf{x.PropertyName});\r\n"));
 
             source.Append(@$"                result.Add(new {_opts.ClassName}
                 {{
 ");
-            _opts.Fields.Iterate(x =>
+            _opts.Fields.ForEach(x =>
                 source.Append($"                    {x.PropertyName} = {x.GetCastSourceCode(x.PropertyName.WithFirstCharLower() + "Value")},\r\n"));
 
             source.Append("                });\r\n");
