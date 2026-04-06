@@ -43,7 +43,7 @@ Generate strong data struct and class factory to load excel data from xls/xlsx t
 **Attribute: [ExcelProvider](src/Excel/ExcelProviderAttribute.cs)**
 
 **Dependencies**
-- [ClosedXML](https://github.com/ClosedXML/ClosedXML)
+- [ClosedXML](https://github.com/ClosedXML/ClosedXML): v0.105.0+
 
 **Dependencies install**
 
