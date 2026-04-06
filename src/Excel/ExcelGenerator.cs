@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ClosedXML.Excel;
-using Maestria.Extensions;
 using Maestria.TypeProviders.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -142,7 +141,7 @@ namespace Maestria.TypeProviders.Excel
             }
 
             using var workbook = ExcelExtensions.OpenWorkbook(templatePath);
-            var sheet = attributes.SheetName.IsNullOrEmpty()
+            var sheet = string.IsNullOrWhiteSpace(attributes.SheetName)
                 ? workbook.Worksheet(attributes.SheetPosition)
                 : workbook.Worksheet(attributes.SheetName);
             for (var i = 1; i <= sheet.ColumnUsedCount(); i++)

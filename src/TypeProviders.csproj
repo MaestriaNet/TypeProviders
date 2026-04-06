@@ -61,7 +61,6 @@
         <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="ExcelNumberFormat" Version="1.1.0"  Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Maestria.Extensions" Version="3.7.2" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
 <!--        <PackageReference Include="RBush" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />-->
         <PackageReference Include="RBush.Signed" Version="4.0.0" Pack="false" PrivateAssets="all" GeneratePathProperty="true" />
@@ -76,7 +75,6 @@
         <None Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
         <None Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
         <None Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
-        <None Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
         <None Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
 <!--        <None Include="$(PkgRBush)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />-->
         <None Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" CopyToOutputDirectory="PreserveNewest" />
@@ -92,7 +90,6 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgDocumentFormat_OpenXml_Framework)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgExcelNumberFormat)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PkgMaestria_Extensions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PkgMicrosoft_Bcl_HashCode)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
 <!--            <TargetPathWithTargetPlatformMoniker Include="$(PkgRBush)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />-->
             <TargetPathWithTargetPlatformMoniker Include="$(PkgRBush_Signed)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
