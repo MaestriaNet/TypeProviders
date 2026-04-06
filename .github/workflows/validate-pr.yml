@@ -38,8 +38,11 @@ jobs:
       - name: Display .NET Version
         run: dotnet --version
 
+      - name: Restore
+        run: dotnet restore
+
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release --no-restore
 
       - name: Test
         run: dotnet test --configuration Release --no-build
