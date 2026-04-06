@@ -7,23 +7,25 @@
 
     <ItemGroup>
         <PackageReference Include="ClosedXML" Version="0.105.0" />
-        <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
-        <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
-        <PackageReference Include="System.IO.Packaging" Version="10.0.2" />
     </ItemGroup>
     
+    <!-- Use "true" to debug this project  -->
     <PropertyGroup>
-        <UseLocalRef>true</UseLocalRef>
+        <UseLocalRef>false</UseLocalRef>
     </PropertyGroup>
 
     <!-- Project reference to debug -->
     <ItemGroup Condition="$(UseLocalRef)">
         <ProjectReference Include="..\..\src\TypeProviders.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+
+        <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
+        <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.2" />
     </ItemGroup>
 
     <!-- NuGet package reference -->
     <ItemGroup Condition="!$(UseLocalRef)" >
-        <PackageReference Include="Maestria.TypeProviders" Version="1.2.2-preview.11">
+        <PackageReference Include="Maestria.TypeProviders" Version="1.2.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

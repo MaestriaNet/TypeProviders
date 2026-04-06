@@ -25,7 +25,6 @@ First, install [Maestria.Type.Providers](https://www.nuget.org/packages/Maestria
 
 ```bash
 dotnet add package Maestria.TypeProviders
-dotnet add package Maestria.Extensions
 dotnet add package ClosedXML
 ```
 
