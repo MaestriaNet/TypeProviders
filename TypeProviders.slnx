@@ -7,9 +7,10 @@
     <Project Path="samples/ExcelSampleClosedXml/ExcelSampleClosedXml.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path=".claudeignore" />
     <File Path=".gitignore" />
-    <File Path="appveyor.yml" />
     <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
   <Project Path="src/TypeProviders.csproj" />
