@@ -11,6 +11,7 @@
     <File Path=".gitignore" />
     <File Path="Directory.Build.props" />
     <File Path="LICENSE" />
+    <File Path="nuget.config" />
     <File Path="README.md" />
   </Folder>
   <Project Path="src/TypeProviders.csproj" />
