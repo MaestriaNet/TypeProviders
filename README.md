@@ -139,14 +139,11 @@ On next build, if there was no change on yout source code used by generators, th
 ```
 
 ---
-## 4 devs
+## For devs
 
 Restart build server to validate clean source generator build. 
 
 `dotnet build-server shutdown` 
-
----
-[Sample of .csproj file](samples/ExcelSample/ExcelSample.csproj#L4)
 
 ---
 
