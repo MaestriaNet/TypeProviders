@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project=".\Version.props" />
-
     <PropertyGroup Label="Build">
         <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Maestria.TypeProviders</AssemblyName>
