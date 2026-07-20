@@ -21,7 +21,7 @@ Source Generator pack to increase productivity and improve source code writing.
 
 ## How install and configure package?
 
-First, install [Maestria.Type.Providers](https://www.nuget.org/packages/Maestria.TypeProviders/) from the dotnet cli command line:
+Install the [Maestria.Type.Providers](https://www.nuget.org/packages/Maestria.TypeProviders/) using the command line:
 
 ```bash
 dotnet add package Maestria.TypeProviders
